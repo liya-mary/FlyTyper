@@ -1,63 +1,82 @@
 [
-    {
-      "text": "Success doesn't come overnight. Keep pushing your limits, and one day, you'll break through barriers you never imagined possible."
-    },
-    {
-      "text": "Every expert was once a beginner. The journey might be tough, but each step forward is progress worth celebrating."
-    },
-    {
-      "text": "Dream big, start small, and act now. Even the smallest action today can lead to great things tomorrow."
-    },
-    {
-      "text": "Believe in your potential. With consistent effort, your dreams can transform into your everyday reality."
-    },
-    {
-      "text": "The difference between ordinary and extraordinary is that little 'extra'. Stay consistent and keep showing up."
-    },
-    {
-      "text": "Don’t wait for the perfect moment. Take the moment and make it perfect through your efforts."
-    },
-    {
-      "text": "You are stronger than your excuses. Get up, get going, and prove yourself right."
-    },
-    {
-      "text": "Small steps every day lead to big results. Stay focused, and keep moving forward."
-    },
-    {
-      "text": "Discomfort is the price of growth. Embrace challenges, for they build your character and resilience."
-    },
-    {
-      "text": "Success is a series of small wins. Celebrate them, and stay hungry for more."
-    },
-    {
-      "text": "Winners are not those who never fail, but those who never quit despite failing."
-    },
-    {
-      "text": "Your only limit is your mindset. Think big, act bold, and trust the process."
-    },
-    {
-      "text": "Hard work beats talent when talent doesn’t work hard. So outwork, outlearn, and outlast."
-    },
-    {
-      "text": "Progress, not perfection. Each day is a new opportunity to grow and learn."
-    },
-    {
-      "text": "Great things never come from comfort zones. Push your boundaries, and success will follow."
-    },
-    {
-      "text": "Stay positive, work hard, and make it happen. Your efforts will soon pay off."
-    },
-    {
-      "text": "You don’t have to be great to start, but you have to start to be great."
-    },
-    {
-      "text": "Mistakes are proof that you’re trying. Keep trying, keep improving, and never give up."
-    },
-    {
-      "text": "One step at a time, one word at a time. You’re building your path to greatness."
-    },
-    {
-      "text": "Determination today leads to success tomorrow. Keep your goals in sight and your effort steady."
-    }
+  {
+    "id": 1,
+    "text": "Success doesn't come overnight. Keep pushing your limits, and one day, you'll break through barriers you never imagined possible."
+  },
+  {
+    "id": 2,
+    "text": "Every expert was once a beginner. The journey might be tough, but each step forward is progress worth celebrating."
+  },
+  {
+    "id": 3,
+    "text": "Dream big, start small, and act now. Even the smallest action today can lead to great things tomorrow."
+  },
+  {
+    "id": 4,
+    "text": "Believe in your potential. With consistent effort, your dreams can transform into your everyday reality."
+  },
+  {
+    "id": 5,
+    "text": "The difference between ordinary and extraordinary is that little 'extra'. Stay consistent and keep showing up."
+  },
+  {
+    "id": 6,
+    "text": "Don’t wait for the perfect moment. Take the moment and make it perfect through your efforts."
+  },
+  {
+    "id": 7,
+    "text": "You are stronger than your excuses. Get up, get going, and prove yourself right."
+  },
+  {
+    "id": 8,
+    "text": "Small steps every day lead to big results. Stay focused, and keep moving forward."
+  },
+  {
+    "id": 9,
+    "text": "Discomfort is the price of growth. Embrace challenges, for they build your character and resilience."
+  },
+  {
+    "id": 10,
+    "text": "Success is a series of small wins. Celebrate them, and stay hungry for more."
+  },
+  {
+    "id": 11,
+    "text": "Winners are not those who never fail, but those who never quit despite failing."
+  },
+  {
+    "id": 12,
+    "text": "Your only limit is your mindset. Think big, act bold, and trust the process."
+  },
+  {
+    "id": 13,
+    "text": "Hard work beats talent when talent doesn’t work hard. So outwork, outlearn, and outlast."
+  },
+  {
+    "id": 14,
+    "text": "Progress, not perfection. Each day is a new opportunity to grow and learn."
+  },
+  {
+    "id": 15,
+    "text": "Great things never come from comfort zones. Push your boundaries, and success will follow."
+  },
+  {
+    "id": 16,
+    "text": "Stay positive, work hard, and make it happen. Your efforts will soon pay off."
+  },
+  {
+    "id": 17,
+    "text": "You don’t have to be great to start, but you have to start to be great."
+  },
+  {
+    "id": 18,
+    "text": "Mistakes are proof that you’re trying. Keep trying, keep improving, and never give up."
+  },
+  {
+    "id": 19,
+    "text": "One step at a time, one word at a time. You’re building your path to greatness."
+  },
+  {
+    "id": 20,
+    "text": "Determination today leads to success tomorrow. Keep your goals in sight and your effort steady."
+  }
 ]
-  

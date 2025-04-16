@@ -48,3 +48,10 @@
   color: white;
   padding: 30px;
 }
+
+.typer-container input{
+  width: 70%;
+  height: 60px;
+  margin: 20px;
+
+}

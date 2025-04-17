@@ -1,0 +1,9 @@
+Daily Log
+
+Day2:
+->Tried to implement wpm
+->word by word correction
+
+Error:
+->You're just working with a temporary variable in your function's scope. It gets reset every time the component re-renders, which React does a lot.
+

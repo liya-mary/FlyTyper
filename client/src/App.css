@@ -44,14 +44,35 @@
 /* typer component */
 
 .message-box{
-  background-color: purple;
-  color: white;
+  /* background-color: purple; */
+  background-color: lightblue;
+
+  /* color: white; */
   padding: 30px;
 }
 
-.typer-container input{
+
+.user-input-error{
+  width: 70%;
+  height: 60px;
+  margin: 20px;
+  background-color: rgb(186, 108, 108);
+
+}
+
+.user-input{
   width: 70%;
   height: 60px;
   margin: 20px;
 
+}
+/* .random-paragraph{
+  color: red;
+} */
+
+.error-char{
+  color: red;
+}
+.correct-char{
+  color: green;
 }

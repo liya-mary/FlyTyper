@@ -10,11 +10,35 @@ function Typer() {
     const [correctWordArr,setcorrectWordArr] =useState([]);
     const [startTime, setStartTime] = useState(null);
     const [userInput, setUserInput] = useState("");
-    const [wpm, setWpm]=useState(0);
-    const [firstName, setFirstName] = useState('');
+    const [wpm,setWpm]=useState(0);
+    const [gameFinish, setGameFinish]=useState(false);
 
 
-    let index;
+    const initialTime = 3*60;
+    const [timeRemaining, setTimeRemaining] = useState(initialTime);
+
+    useEffect(() => {
+
+        const timerInterval = setInterval(() => {
+            setTimeRemaining((prevTime) => {
+                if(gameFinish){
+                    clearInterval(timerInterval);
+                    console.log('game completed!');
+                    return timeRemaining;
+                }else if (prevTime === 0) {
+                    clearInterval(timerInterval);
+                    // Perform actions when the timer reaches zero
+                    console.log('Countdown complete!');
+                    return 0;
+                } else {
+                    return prevTime - 1;
+                }
+        });
+      }, 1000);
+  
+      // Cleanup the interval when the component unmounts
+      return () => clearInterval(timerInterval);
+    }, [gameFinish]); // The empty 
 
 
         // let userInput=event.target.value;
@@ -32,7 +56,6 @@ function Typer() {
         // }    
 
     
-
     function handleInput(event){
 
         if (!startTime) {
@@ -60,23 +83,21 @@ function Typer() {
 
         }
 
-
-        // if(wordsArrIndex===wordsArr.length-1){
-        //     console.log("userInput : ", value);
-        //     console.log("wordsArr[wordsArrIndex] : ", wordsArr[wordsArrIndex]);
-        //     if(value===wordsArr[wordsArrIndex]){
-        //         console.log(value +": is equal to :"+ wordsArr[wordsArrIndex]);
-        //         console.log("you win");
-        //         setcorrectWordArr([...correctWordArr,value]);
-        //         setUserInput("");
-        //         alert("you won");
-        //     }else{
-        //         console.log(value +": is not equal to :"+ wordsArr[wordsArrIndex]);
-        //     }
-        // }
+        if(wordsArrIndex===wordsArr.length-1){
+            console.log("userInput : ", value);
+            console.log("wordsArr[wordsArrIndex] : ", wordsArr[wordsArrIndex]);
+            if(value===wordsArr[wordsArrIndex]){
+                console.log(value +": is equal to :"+ wordsArr[wordsArrIndex]);
+                console.log("you win");
+                setcorrectWordArr([...correctWordArr,value]);
+                setUserInput("");
+                setGameFinish(true);
+                // alert("you won");
+            }else{
+                console.log(value +": is not equal to :"+ wordsArr[wordsArrIndex]);
+            }
+        }
     }
-
-
 
     useEffect(()=>{
         fetch('/message.json').then((response)=>{
@@ -97,22 +118,32 @@ function Typer() {
         }
     }, [randomParagraph]);
 
-    // useEffect(() => {
-    //     console.log("correctWordArr updated: ", correctWordArr);
-    // }, [correctWordArr]);
+
+    useEffect(() => {
+        let wordcount=correctWordArr.length;
+        console.log("wordcount: ",wordcount);
+        let timeTaken=((Date.now()-startTime)/1000)/60;
+        console.log("time taken: ", timeTaken);
+        let currwpm=  Math.round((wordcount / timeTaken));
+        console.log("currwpm: ", currwpm+ " wpm");
+        setWpm(currwpm);
+    }, [timeRemaining]);
+
+    
+
 
 
     if (!paragraphList || paragraphList.length === 0) {
         return <div>Loading messages...</div>; 
     }
 
-    let wordcount=correctWordArr.length;
-    console.log("wordcount: ",wordcount);
-    let timeTaken=((Date.now()-startTime)/1000)/60;
-    console.log("time taken: ", timeTaken);
-    let currwpm=  Math.round((wordcount / timeTaken));
-    console.log("currwpm: ", currwpm+ " wpm");
-    // setWpm(currwpm);
+    // let wordcount=correctWordArr.length;
+    // console.log("wordcount: ",wordcount);
+    // let timeTaken=((Date.now()-startTime)/1000)/60;
+    // console.log("time taken: ", timeTaken);
+    // let currwpm=  Math.round((wordcount / timeTaken));
+    // console.log("currwpm: ", currwpm+ " wpm");
+    // // setWpm(currwpm);
 
     
 
@@ -121,9 +152,9 @@ function Typer() {
             <div className="message-box">
                 <h3 className="random-paragraph">{randomParagraph}</h3> 
             </div>
-            <h4>wpm:  {currwpm}</h4>
+            <h4>wpm:  {wpm}</h4>
             <h4>Accuracy</h4>
-            <h4>timer</h4>
+            <h4>timer :{timeRemaining}</h4>
             <div>
                 <h3>Correct Words:</h3>
                 <p style={{ color: 'green', fontWeight: 'bold' }}>{correctWordArr.join(" ")}</p>
@@ -136,7 +167,6 @@ function Typer() {
             <div></div>
 
         </div>
-
     )
   }
   

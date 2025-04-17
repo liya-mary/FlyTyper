@@ -10,36 +10,11 @@ function Typer() {
     const [correctWordArr,setcorrectWordArr] =useState([]);
     const [startTime, setStartTime] = useState(null);
     const [userInput, setUserInput] = useState("");
+    const [wpm, setWpm]=useState(0);
+    const [firstName, setFirstName] = useState('');
 
 
     let index;
-
- 
-
-    function handleKeyDown(event){ 
-        if (!startTime) {
-            const now = Date.now();
-            setStartTime(now);
-            console.log("startTime: ", now);
-        }
-
-        let userWord=userInput.trim();
-        // let currentChar=value;
-
-        if(event.code==='Space'){
-            event.preventDefault();
-            console.log('userInput : ', userWord);
-            if(userWord===wordsArr[wordsArrIndex]){
-                console.log(userWord +": is equal to :"+ wordsArr[wordsArrIndex]);
-                setcorrectWordArr([...correctWordArr,userWord]);
-                setWordsArrIndex((wordsArrIndex)=>wordsArrIndex+1);
-                setUserInput("");
-
-            }else{
-                console.log(userWord +": is not  equal to :"+ wordsArr[wordsArrIndex]);
-            }
-            
-        }
 
 
         // let userInput=event.target.value;
@@ -56,26 +31,51 @@ function Typer() {
         //     setUserClassName("user-input")
         // }    
 
-    }
+    
 
     function handleInput(event){
-        let value=event.target.value;
-        console.log("value: ",value);
-        setUserInput(value);
-        if(wordsArrIndex===wordsArr.length-1){
-            console.log("userInput : ", value);
-            console.log("wordsArr[wordsArrIndex] : ", wordsArr[wordsArrIndex]);
-            if(value===wordsArr[wordsArrIndex]){
-                console.log(value +": is equal to :"+ wordsArr[wordsArrIndex]);
-                console.log("you win");
-                setcorrectWordArr([...correctWordArr,value]);
-                setUserInput("");
-                alert("you won");
-            }else{
-                console.log(value +": is not equal to :"+ wordsArr[wordsArrIndex]);
-            }
+
+        if (!startTime) {
+            const now = Date.now();
+            setStartTime(now);
+            console.log("startTime: ", now);
         }
+        let value=event.target.value;
+        console.log("typeof :",typeof(value))
+        console.log("value: ",value);
+
+        setUserInput(value);
+
+        if(value.includes(" ")){
+            let userWord=userInput.trim();
+            console.log('userInput : ', userWord);
+            if(userWord===wordsArr[wordsArrIndex]){
+                console.log(userWord +": is equal to :"+ wordsArr[wordsArrIndex]);
+                setcorrectWordArr([...correctWordArr,userWord]);
+                setWordsArrIndex((wordsArrIndex)=>wordsArrIndex+1);
+                setUserInput("");
+            }else{
+                console.log(userWord +": is not  equal to :"+ wordsArr[wordsArrIndex]);
+            }
+
+        }
+
+
+        // if(wordsArrIndex===wordsArr.length-1){
+        //     console.log("userInput : ", value);
+        //     console.log("wordsArr[wordsArrIndex] : ", wordsArr[wordsArrIndex]);
+        //     if(value===wordsArr[wordsArrIndex]){
+        //         console.log(value +": is equal to :"+ wordsArr[wordsArrIndex]);
+        //         console.log("you win");
+        //         setcorrectWordArr([...correctWordArr,value]);
+        //         setUserInput("");
+        //         alert("you won");
+        //     }else{
+        //         console.log(value +": is not equal to :"+ wordsArr[wordsArrIndex]);
+        //     }
+        // }
     }
+
 
 
     useEffect(()=>{
@@ -106,6 +106,14 @@ function Typer() {
         return <div>Loading messages...</div>; 
     }
 
+    let wordcount=correctWordArr.length;
+    console.log("wordcount: ",wordcount);
+    let timeTaken=((Date.now()-startTime)/1000)/60;
+    console.log("time taken: ", timeTaken);
+    let currwpm=  Math.round((wordcount / timeTaken));
+    console.log("currwpm: ", currwpm+ " wpm");
+    // setWpm(currwpm);
+
     
 
     return (
@@ -113,7 +121,7 @@ function Typer() {
             <div className="message-box">
                 <h3 className="random-paragraph">{randomParagraph}</h3> 
             </div>
-            <h4>wpm</h4>
+            <h4>wpm:  {currwpm}</h4>
             <h4>Accuracy</h4>
             <h4>timer</h4>
             <div>
@@ -122,8 +130,10 @@ function Typer() {
             </div>
 
             <div>
-                <input  className={userClassName}  type="text" name="userText"   value={userInput} onChange={handleInput} onKeyDown={handleKeyDown}  />
+                <input  className={userClassName}  type="text" name="userText"   value={userInput} onChange={handleInput} />
+
             </div>
+            <div></div>
 
         </div>
 
@@ -157,3 +167,30 @@ function Typer() {
                 //     console.log("Space key pressed");
                 //     }
                 // }}
+
+
+    // function handleKeyDown(event){ 
+    //     if (!startTime) {
+    //         const now = Date.now();
+    //         setStartTime(now);
+    //         console.log("startTime: ", now);
+    //     }
+
+    //     let userWord=userInput.trim();
+    //     // let currentChar=value;
+
+    //     if(event.code==='Space'){
+    //         event.preventDefault();
+    //         console.log('userInput : ', userWord);
+    //         if(userWord===wordsArr[wordsArrIndex]){
+    //             console.log(userWord +": is equal to :"+ wordsArr[wordsArrIndex]);
+    //             setcorrectWordArr([...correctWordArr,userWord]);
+    //             setWordsArrIndex((wordsArrIndex)=>wordsArrIndex+1);
+    //             setUserInput("");
+    //             // calculateWordsPerMin();
+
+    //         }else{
+    //             console.log(userWord +": is not  equal to :"+ wordsArr[wordsArrIndex]);
+    //         }
+            
+    //     }

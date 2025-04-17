@@ -16,27 +16,31 @@ function Typer() {
 
  
 
-    function handleInput(event){ 
+    function handleKeyDown(event){ 
         if (!startTime) {
-            setStartTime(Date.now());
-            console.log("startTime: ",startTime);
+            const now = Date.now();
+            setStartTime(now);
+            console.log("startTime: ", now);
         }
 
+        let userWord=userInput.trim();
+        // let currentChar=value;
+
         if(event.code==='Space'){
-            let userWord=userInput.trim();
-            setUserInput("");
             event.preventDefault();
             console.log('userInput : ', userWord);
             if(userWord===wordsArr[wordsArrIndex]){
                 console.log(userWord +": is equal to :"+ wordsArr[wordsArrIndex]);
                 setcorrectWordArr([...correctWordArr,userWord]);
                 setWordsArrIndex((wordsArrIndex)=>wordsArrIndex+1);
+                setUserInput("");
 
             }else{
                 console.log(userWord +": is not  equal to :"+ wordsArr[wordsArrIndex]);
             }
             
         }
+
 
         // let userInput=event.target.value;
         // index=userInput.length-1;
@@ -52,6 +56,25 @@ function Typer() {
         //     setUserClassName("user-input")
         // }    
 
+    }
+
+    function handleInput(event){
+        let value=event.target.value;
+        console.log("value: ",value);
+        setUserInput(value);
+        if(wordsArrIndex===wordsArr.length-1){
+            console.log("userInput : ", value);
+            console.log("wordsArr[wordsArrIndex] : ", wordsArr[wordsArrIndex]);
+            if(value===wordsArr[wordsArrIndex]){
+                console.log(value +": is equal to :"+ wordsArr[wordsArrIndex]);
+                console.log("you win");
+                setcorrectWordArr([...correctWordArr,value]);
+                setUserInput("");
+                alert("you won");
+            }else{
+                console.log(value +": is not equal to :"+ wordsArr[wordsArrIndex]);
+            }
+        }
     }
 
 
@@ -74,9 +97,9 @@ function Typer() {
         }
     }, [randomParagraph]);
 
-    useEffect(() => {
-        console.log("correctWordArr updated: ", correctWordArr);
-    }, [correctWordArr]);
+    // useEffect(() => {
+    //     console.log("correctWordArr updated: ", correctWordArr);
+    // }, [correctWordArr]);
 
 
     if (!paragraphList || paragraphList.length === 0) {
@@ -99,7 +122,7 @@ function Typer() {
             </div>
 
             <div>
-                <input  className={userClassName}  type="text" name="userText"   value={userInput} onChange={(e) => setUserInput(e.target.value)} onKeyDown={handleInput}    />
+                <input  className={userClassName}  type="text" name="userText"   value={userInput} onChange={handleInput} onKeyDown={handleKeyDown}  />
             </div>
 
         </div>

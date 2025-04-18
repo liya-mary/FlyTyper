@@ -1,32 +1,9 @@
-import Typer from "./Typer"
+import React from 'react';
 
 
 function Navbar() {
 
     return (
-        // <nav className="navbar">
-        //     <div className="navbar-left">
-        //         <a href="/" className="logo">
-        //         Fly Typer
-        //         </a>
-        //     </div>
-        //     <div className="navbar-center">
-        //         <ul className="nav-links">
-        //         <li>
-        //             <a href="/products">Home</a>
-        //         </li>
-        //         <li>
-        //             <a href="/about">About Us</a>
-        //         </li>
-        //         <li>
-        //             <a href="/contact">High Scores</a>
-        //         </li>
-        //         </ul>
-        //     </div>
-        //     <div className="navbar-right">
-        //         SignUp/Login
-        //     </div>
-        // </nav>
 
         <div>
             <nav className="navbar" role="navigation" aria-label="main navigation">

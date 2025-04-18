@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import SoloPlay from './SoloPlay';
+import React from 'react';
 
 
 const Dashboard = () => {

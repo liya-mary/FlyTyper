@@ -1,7 +1,6 @@
-import Typer from "./Typer"
-import Navbar from "./Navbar"
-import { useNavigate } from 'react-router-dom';
 
+import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 
 function Home() {
@@ -31,8 +30,8 @@ function Home() {
                                 </h1>
                                 <h3 className="subtitle"> Increase your typing speed while racing against others </h3>
                                 <div className="buttons">
-                                    <button className="button is-yellow" onClick={buttonHandler}>Solo Play</button>
-                                    <button className="button">Quick play</button>
+                                    <button className="button is-yellow has-background-link" onClick={buttonHandler}>Solo Play</button>
+                                    <button className="button has-background-link">Quick play</button>
                                 </div>
                             </div>
                             <div data-aos="fade-right" className="column

@@ -1,16 +1,23 @@
-import Typer from "./Typer"
+import { Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import SoloPlay from './SoloPlay';
 
 
-function Dashboard() {
-
+const Dashboard = () => {
   return (
-    <>
-    <h1>Fly Typer</h1>
-    <h3>Increase your typing speed while racing against others </h3>
-    <Typer/>
+    <div className="dashboard">
+      <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
+        <Route
+          path="/soloplay"
+          element={<SoloPlay />}
+        />
+      </Routes>
+    </div>
+  );
+};
 
-    </>
-  )
-}
-
-export default Dashboard
+export default Dashboard;

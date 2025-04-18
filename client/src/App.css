@@ -84,3 +84,78 @@
 .correct-char{
   color: green;
 }
+
+
+/* Navbar */
+
+.navbarComponent{
+  display: flex;
+  justify-content: space-around;
+  background-color: purple;
+  height: 100px;
+  margin: 0 auto; width: 960px;
+  color: white;
+  /* position: sticky;
+  top: 0; */
+}
+
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: purple;
+  color: #fff;
+  padding: 1rem;
+}
+
+.navbar-left .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-center .nav-links {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-center .nav-links li {
+  margin-right: 1rem;
+}
+
+.navbar-center .nav-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+
+.navbar-right {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 1rem;
+  position: relative;
+}
+
+/* Dashboard */
+.dashboard-container button{
+  color: white;
+  background-color: ;
+  margin: 20px;
+  padding: 20px;
+
+}
+
+.dashboard-container{
+  background-color: rgb(240, 240, 240);
+}
+

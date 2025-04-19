@@ -6,9 +6,13 @@ import React from 'react';
 function Home() {
     let navigate = useNavigate();
 
-    const buttonHandler = () => {
-        console.log("button clicked");
+    const soloPlayHandler = () => {
+        console.log("soloplay clicked");
         navigate('/soloplay');
+    }
+    const QuickPlayHandler = () => {
+        console.log("Quickplay clicked");
+        navigate('/quickplay');
     }
 
     return (
@@ -30,8 +34,8 @@ function Home() {
                                 </h1>
                                 <h3 className="subtitle"> Increase your typing speed while racing against others </h3>
                                 <div className="buttons">
-                                    <button className="button is-yellow has-background-link" onClick={buttonHandler}>Solo Play</button>
-                                    <button className="button has-background-link">Quick play</button>
+                                    <button className="button is-yellow has-background-link" onClick={soloPlayHandler}>Solo Play</button>
+                                    <button className="button has-background-link" onClick={QuickPlayHandler}>Quick play</button>
                                 </div>
                             </div>
                             <div data-aos="fade-right" className="column

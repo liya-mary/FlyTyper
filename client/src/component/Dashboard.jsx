@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import SoloPlay from './SoloPlay';
 import React from 'react';
+import QuickPlay from './QuickPlay';
 
 
 const Dashboard = () => {
@@ -16,6 +17,11 @@ const Dashboard = () => {
           path="/soloplay"
           element={<SoloPlay />}
         />
+        <Route
+          path="/quickplay"
+          element={<QuickPlay />}
+        />
+
       </Routes>
     </div>
   );

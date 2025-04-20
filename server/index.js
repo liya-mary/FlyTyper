@@ -24,6 +24,7 @@ const io = new Server(server, {
 });
 
 const roomParagraphs = {};
+const usersWpm = {};
 
 io.on('connection', socket => {
     //On join room
@@ -33,12 +34,15 @@ io.on('connection', socket => {
         socket.join(room);
         const id = socket.id;
         console.log("id here: ", id);
+        usersWpm[socket.id] = 0;
 
         console.log(id + ' joined room: ' + room);
         let roomUsers = await io.in(room).fetchSockets()
         const socketIds = roomUsers.map(s => s.id);
         console.log("roomUsers: ", socketIds);
         // io.to(room).emit('receive_message', id);
+
+
         io.to(room).emit('userList', socketIds);
         if (!roomParagraphs[room]) {
             const paragraphList = JSON.parse(fs.readFileSync('./message.json', 'utf-8'));
@@ -46,25 +50,26 @@ io.on('connection', socket => {
             const randomPara = paragraphList[randomIndex].text;
             console.log("random para server: ", randomPara);
             roomParagraphs[room] = randomPara;
-
         }
+
         io.to(room).emit('randomPara', roomParagraphs[room]);
 
-
-
-
+        socket.on("trackWpm", (currWpm) => {
+            usersWpm[socket.id] = currWpm;
+            io.to(room).emit('usersWpm', usersWpm);
+        })
 
     });
-    // socket.on('leave', function (room) {
-    //     try {
-    //         console.log('[socket]', 'leave room :', room);
-    //         socket.leave(room);
-    //         socket.to(room).emit('user left', socket.id);
-    //     } catch (e) {
-    //         console.log('[error]', 'leave room :', e);
-    //         socket.emit('error', 'couldnt perform requested action');
-    //     }
-    // })
+    socket.on('leave', function (room) {
+        try {
+            console.log('[socket]', 'leave room :', room);
+            socket.leave(room);
+            socket.to(room).emit('user left', socket.id);
+        } catch (e) {
+            console.log('[error]', 'leave room :', e);
+            socket.emit('error', 'couldnt perform requested action');
+        }
+    })
 
 
 

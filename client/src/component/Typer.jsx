@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // import { useNavigate } from 'react-router-dom';
 
 
-function Typer({ randomParagraph, gameFinish, handleGameFinish }) {
+function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm }) {
 
     const [userClassName, setUserClassName] = useState("user-input");
     const [wordsArr, setWordsArr] = useState([]);
@@ -12,7 +12,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish }) {
     const [correctWordArr, setcorrectWordArr] = useState([]);
     const [startTime, setStartTime] = useState(null);
     const [userInput, setUserInput] = useState("");
-    const [wpm, setWpm] = useState(0);
     const [accuracy, setAccuracy] = useState(100);
     const [characterErrorCount, setCharacterErrorCount] = useState(0);
     const [progress, setProgress] = useState(0);
@@ -22,7 +21,8 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish }) {
         randomParagraph: PropTypes.string.isRequired,
         gameFinish: PropTypes.bool.isRequired,
         handleGameFinish: PropTypes.func.isRequired,
-
+        wpm: PropTypes.number.isRequired,
+        handleWpm: PropTypes.func.isRequired,
     };
 
     const initialTime = 3 * 60;
@@ -137,13 +137,14 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish }) {
         let timeTaken = ((Date.now() - startTime) / 1000) / 60;
         // console.log("time taken: ", timeTaken);
         let currwpm = Math.round((wordcount / timeTaken));
-        // console.log("currwpm: ", currwpm+ " wpm");
-        setWpm(currwpm);
+        console.log("currwpm: ", currwpm + " wpm");
+        // setWpm(currwpm);
+        handleWpm(currwpm);
     }, [timeRemaining]);
 
     //calculate accuracy
     useEffect(() => {
-        console.log("error count: ", characterErrorCount);
+        // console.log("error count: ", characterErrorCount);
         if (correctWordArr.length > 0) {
             const totalWordCount = wordsArr.length;
             const wrongWordsCount = characterErrorCount / 5;

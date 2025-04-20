@@ -9,8 +9,9 @@ const socket = io.connect('http://localhost:3000');
 // let receiveMessage;
 // 
 export default function QuickPlay() {
-    const [userId, setUserId] = useState();
     const [userList, setUserList] = useState([]);
+    const [randomParagraph, setRandomParagraph] = useState();
+
 
 
     // Function to send a message
@@ -38,6 +39,13 @@ export default function QuickPlay() {
         })
     },)
 
+    useEffect(() => {
+        socket.on("randomPara", (data) => {
+            console.log("userList: ", data);
+            setRandomParagraph(data);
+        })
+    },)
+
 
     return (
         <>
@@ -52,7 +60,7 @@ export default function QuickPlay() {
                 }
             </div>
             <div>
-                <Typer />
+                <Typer randomParagraph={randomParagraph} />
             </div>
 
         </>

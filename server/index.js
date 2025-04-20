@@ -5,6 +5,7 @@ const cors = require('cors');
 const http = require('http');
 const { Server } = require("socket.io");
 const db = require('./database');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,6 +39,15 @@ io.on('connection', socket => {
         console.log("roomUsers: ", socketIds);
         // io.to(room).emit('receive_message', id);
         io.to(room).emit('userList', socketIds);
+
+
+        const paragraphList = JSON.parse(fs.readFileSync('./message.json', 'utf-8'));
+        const randomIndex = Math.floor(Math.random() * paragraphList.length);
+        const randomPara = paragraphList[randomIndex].text;
+        console.log("random para server: ", randomPara);
+
+        io.to(room).emit('randomPara', randomPara);
+
 
     });
 

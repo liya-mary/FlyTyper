@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'; // Import necessary modules from React
 import io from 'socket.io-client'; // Import the socket.io client library
+import Typer from './Typer';
 // import axios from 'axios'; // Import axios for API requests
 
 // Establish a socket connection to the server at the specified URL
@@ -9,7 +10,7 @@ const socket = io.connect('http://localhost:3000');
 // 
 export default function QuickPlay() {
     const [userId, setUserId] = useState();
-    const [userList, setUserList] = useState();
+    const [userList, setUserList] = useState([]);
 
 
     // Function to send a message
@@ -24,12 +25,16 @@ export default function QuickPlay() {
     // }
 
     useEffect(() => {
-        socket.emit('join', "My room");
+        if (socket) {
+            socket.emit('join', "My room");
+        }
     }, [])
+
+
     useEffect(() => {
-        socket.on("receive_message", (data) => {
-            console.log("data: ", data);
-            setUserId(data);
+        socket.on("userList", (data) => {
+            console.log("userList: ", data);
+            setUserList(data);
         })
     },)
 
@@ -37,11 +42,17 @@ export default function QuickPlay() {
     return (
         <>
             <div>
-                {/* <button onClick={sendMessage}>send message</button> Button to trigger sending a message */}
+                {
+                    userList.length > 0 &&
+                    userList.map((user) => {
+                        console.log("user ids map: ", user)
+                        return <li key={user}>Guest:{user === socket.id ? "you" : user}</li>
+                    })
+
+                }
             </div>
             <div>
-                <h3>Guest id:{userId} </h3>
-
+                <Typer />
             </div>
 
         </>

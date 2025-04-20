@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react"
 import React from 'react';
+import PropTypes from 'prop-types';
 // import { useNavigate } from 'react-router-dom';
 
 
-function Typer() {
-    const [paragraphList, setParagraphList] = useState([]);
-    const [randomParagraph, setRandomParagraph] = useState('');
+function Typer({ randomParagraph }) {
+
     const [userClassName, setUserClassName] = useState("user-input");
-    // const [characterClassName, setcharacterClassName] =useState("");
     const [wordsArr, setWordsArr] = useState([]);
     const [wordsArrIndex, setWordsArrIndex] = useState(0);
     const [correctWordArr, setcorrectWordArr] = useState([]);
@@ -20,6 +19,9 @@ function Typer() {
     const [progress, setProgress] = useState(0);
 
 
+    Typer.propTypes = {
+        randomParagraph: PropTypes.string.isRequired,
+    };
 
     const initialTime = 3 * 60;
     const [timeRemaining, setTimeRemaining] = useState(initialTime);
@@ -116,16 +118,7 @@ function Typer() {
     }, [gameFinish]); // The empty 
 
 
-    useEffect(() => {
-        fetch('/message.json').then((response) => {
-            response.json().then((data) => {
-                // console.log("data: ",data);
-                setParagraphList(data);
-                const randomIndex = Math.floor(Math.random() * data.length);
-                setRandomParagraph(data[randomIndex].text);
-            }).catch(error => console.error('Error fetching data:', error));
-        })
-    }, [])
+
 
     useEffect(() => {
         if (randomParagraph) {
@@ -170,9 +163,7 @@ function Typer() {
     }, [correctWordArr]);
 
 
-    if (!paragraphList || paragraphList.length === 0) {
-        return <div>Loading messages...</div>;
-    }
+
 
     return (
         <div className="hero-body" >

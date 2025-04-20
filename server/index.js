@@ -25,21 +25,22 @@ const io = new Server(server, {
 
 io.on('connection', socket => {
     //On join room
-    socket.on('join', room => {
-        socket.join(room);
+    console.log("User connected ", socket.id); // Log the socket ID of the connected user
 
-        console.log(socket.id + ' joined room: ' + room);
-        io.to(room).emit('receive_message', socket.id);
+    socket.on('join', async room => {
+        socket.join(room);
+        const id = socket.id;
+        console.log("id here: ", id);
+
+        console.log(id + ' joined room: ' + room);
+        let roomUsers = await io.in(room).fetchSockets()
+        const socketIds = roomUsers.map(s => s.id);
+        console.log("roomUsers: ", socketIds);
+        // io.to(room).emit('receive_message', id);
+        io.to(room).emit('userList', socketIds);
+
     });
 
-    //On message send
-    // socket.on('send_message', (data) => {
-    //Log message
-    //   console.log(data);
-
-    //Emit to recipient
-
-    // });
 });
 
 

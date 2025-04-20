@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // import { useNavigate } from 'react-router-dom';
 
 
-function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm }) {
+function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, progress, handleProgress }) {
 
     const [userClassName, setUserClassName] = useState("user-input");
     const [wordsArr, setWordsArr] = useState([]);
@@ -14,7 +14,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm }
     const [userInput, setUserInput] = useState("");
     const [accuracy, setAccuracy] = useState(100);
     const [characterErrorCount, setCharacterErrorCount] = useState(0);
-    const [progress, setProgress] = useState(0);
 
 
     Typer.propTypes = {
@@ -23,6 +22,8 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm }
         handleGameFinish: PropTypes.func.isRequired,
         wpm: PropTypes.number.isRequired,
         handleWpm: PropTypes.func.isRequired,
+        progress: PropTypes.number.isRequired,
+        handleProgress: PropTypes.func.isRequired,
     };
 
     const initialTime = 3 * 60;
@@ -161,19 +162,18 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm }
         if (correctWordArr.length > 0) {
             let newProgress = Math.round((correctWordArr.length / wordsArr.length) * 100);
             console.log("newprogress: ", newProgress);
-            setProgress(() => newProgress);
+            // setProgress(() => newProgress);
+            handleProgress(newProgress);
         }
     }, [correctWordArr]);
 
 
-
-
     return (
         <div className="hero-body" >
-            <div>
+            {/* <div>
                 <h3>You </h3>
                 <progress value={progress} max={100} />
-            </div>
+            </div> */}
 
             <div className="message  has-text-centered">
                 <div className="message-header has-background-link has-text-light">

@@ -25,6 +25,8 @@ const io = new Server(server, {
 
 const roomParagraphs = {};
 const usersWpm = {};
+const usersProgress = {};
+
 
 io.on('connection', socket => {
     //On join room
@@ -35,6 +37,7 @@ io.on('connection', socket => {
         const id = socket.id;
         console.log("id here: ", id);
         usersWpm[socket.id] = 0;
+        usersProgress[socket.id] = 0;
 
         console.log(id + ' joined room: ' + room);
         let roomUsers = await io.in(room).fetchSockets()
@@ -57,6 +60,11 @@ io.on('connection', socket => {
         socket.on("trackWpm", (currWpm) => {
             usersWpm[socket.id] = currWpm;
             io.to(room).emit('usersWpm', usersWpm);
+        })
+
+        socket.on("trackProgress", (currProgress) => {
+            usersProgress[socket.id] = currProgress;
+            io.to(room).emit('usersProgress', usersProgress);
         })
 
     });

@@ -23,6 +23,7 @@ const io = new Server(server, {
     },
 });
 
+const roomParagraphs = {};
 
 io.on('connection', socket => {
     //On join room
@@ -39,17 +40,33 @@ io.on('connection', socket => {
         console.log("roomUsers: ", socketIds);
         // io.to(room).emit('receive_message', id);
         io.to(room).emit('userList', socketIds);
+        if (!roomParagraphs[room]) {
+            const paragraphList = JSON.parse(fs.readFileSync('./message.json', 'utf-8'));
+            const randomIndex = Math.floor(Math.random() * paragraphList.length);
+            const randomPara = paragraphList[randomIndex].text;
+            console.log("random para server: ", randomPara);
+            roomParagraphs[room] = randomPara;
+
+        }
+        io.to(room).emit('randomPara', roomParagraphs[room]);
 
 
-        const paragraphList = JSON.parse(fs.readFileSync('./message.json', 'utf-8'));
-        const randomIndex = Math.floor(Math.random() * paragraphList.length);
-        const randomPara = paragraphList[randomIndex].text;
-        console.log("random para server: ", randomPara);
 
-        io.to(room).emit('randomPara', randomPara);
 
 
     });
+    // socket.on('leave', function (room) {
+    //     try {
+    //         console.log('[socket]', 'leave room :', room);
+    //         socket.leave(room);
+    //         socket.to(room).emit('user left', socket.id);
+    //     } catch (e) {
+    //         console.log('[error]', 'leave room :', e);
+    //         socket.emit('error', 'couldnt perform requested action');
+    //     }
+    // })
+
+
 
 });
 

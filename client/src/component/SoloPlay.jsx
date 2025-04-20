@@ -6,6 +6,12 @@ import { useEffect, useState } from "react"
 function SoloPlay() {
     const [paragraphList, setParagraphList] = useState([]);
     const [randomParagraph, setRandomParagraph] = useState('');
+    const [gameFinish, setGameFinish] = useState(false);
+
+    const handleGameFinish = () => {
+        setGameFinish(true);
+
+    }
 
     useEffect(() => {
         fetch('/message.json').then((response) => {
@@ -26,7 +32,7 @@ function SoloPlay() {
 
         < >
             <h1 className="is-size-1">Solo Play</h1>
-            <Typer randomParagraph={randomParagraph} />
+            <Typer randomParagraph={randomParagraph} gameFinish={gameFinish} handleGameFinish={handleGameFinish} />
 
         </>
 

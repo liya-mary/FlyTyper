@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react'; // Import necessary modules from React
-import io from 'socket.io-client'; // Import the socket.io client library
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
 import Typer from './Typer';
 // import axios from 'axios'; // Import axios for API requests
 
-// Establish a socket connection to the server at the specified URL
 const socket = io.connect('http://localhost:3000');
 
-// let receiveMessage;
-// 
+
+
 export default function QuickPlay() {
     const [userList, setUserList] = useState([]);
     const [randomParagraph, setRandomParagraph] = useState();
-
+    const [gameFinish, setGameFinish] = useState(false);
 
 
     // Function to send a message
@@ -25,10 +24,22 @@ export default function QuickPlay() {
     //     });
     // }
 
+    const handleGameFinish = () => {
+        setGameFinish(true);
+        // socket.emit("leave", "My room");
+
+    }
+
     useEffect(() => {
         if (socket) {
             socket.emit('join', "My room");
         }
+    }, [])
+    useEffect(() => {
+        socket.on("user left", (data) => {
+            console.log("socket left ", data);
+        })
+
     }, [])
 
 
@@ -60,7 +71,8 @@ export default function QuickPlay() {
                 }
             </div>
             <div>
-                <Typer randomParagraph={randomParagraph} />
+                <Typer randomParagraph={randomParagraph}
+                    gameFinish={gameFinish} handleGameFinish={handleGameFinish} />
             </div>
 
         </>

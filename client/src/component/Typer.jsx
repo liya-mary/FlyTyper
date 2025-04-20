@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // import { useNavigate } from 'react-router-dom';
 
 
-function Typer({ randomParagraph }) {
+function Typer({ randomParagraph, gameFinish, handleGameFinish }) {
 
     const [userClassName, setUserClassName] = useState("user-input");
     const [wordsArr, setWordsArr] = useState([]);
@@ -13,7 +13,6 @@ function Typer({ randomParagraph }) {
     const [startTime, setStartTime] = useState(null);
     const [userInput, setUserInput] = useState("");
     const [wpm, setWpm] = useState(0);
-    const [gameFinish, setGameFinish] = useState(false);
     const [accuracy, setAccuracy] = useState(100);
     const [characterErrorCount, setCharacterErrorCount] = useState(0);
     const [progress, setProgress] = useState(0);
@@ -21,6 +20,9 @@ function Typer({ randomParagraph }) {
 
     Typer.propTypes = {
         randomParagraph: PropTypes.string.isRequired,
+        gameFinish: PropTypes.bool.isRequired,
+        handleGameFinish: PropTypes.func.isRequired,
+
     };
 
     const initialTime = 3 * 60;
@@ -86,7 +88,7 @@ function Typer({ randomParagraph }) {
                 console.log("you win");
                 setcorrectWordArr([...correctWordArr, value]);
                 setUserInput("");
-                setGameFinish(true);
+                handleGameFinish();
                 // alert("you won");
             } else {
                 console.log(value + ": is not equal to :" + wordsArr[wordsArrIndex]);
@@ -201,7 +203,7 @@ function Typer({ randomParagraph }) {
                 <p className="has-text-success">{correctWordArr.join(" ")}</p>
             </div>
             <div>
-                <input className={`${userClassName} input`} disabled={gameFinish} type="text" name="userText" value={userInput} onChange={handleInput} onPaste={(e) => {
+                <input className={`${userClassName} input`} disabled={gameFinish || timeRemaining === 0} type="text" name="userText" value={userInput} onChange={handleInput} onPaste={(e) => {
                     e.preventDefault()
                     return false;
                 }} />

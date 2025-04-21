@@ -4,19 +4,20 @@ import PropTypes from 'prop-types';
 // import { useNavigate } from 'react-router-dom';
 
 
-function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, progress, handleProgress }) {
+function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, progress, handleProgress, startTime, gameStarted }) {
 
     const [userClassName, setUserClassName] = useState("user-input");
     const [wordsArr, setWordsArr] = useState([]);
     const [wordsArrIndex, setWordsArrIndex] = useState(0);
     const [correctWordArr, setcorrectWordArr] = useState([]);
-    const [startTime, setStartTime] = useState(null);
+    // const [startTime, setStartTime] = useState(null);
     const [userInput, setUserInput] = useState("");
     const [accuracy, setAccuracy] = useState(100);
     const [characterErrorCount, setCharacterErrorCount] = useState(0);
+    const [now, setNow] = useState(Date.now());
 
 
-    Typer.propTypes = {
+    Typer.propTypes = { //AI code
         randomParagraph: PropTypes.string.isRequired,
         gameFinish: PropTypes.bool.isRequired,
         handleGameFinish: PropTypes.func.isRequired,
@@ -24,6 +25,10 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
         handleWpm: PropTypes.func.isRequired,
         progress: PropTypes.number.isRequired,
         handleProgress: PropTypes.func.isRequired,
+        startTime: PropTypes.number.isRequired,
+        gameStarted: PropTypes.bool.isRequired,
+
+
     };
 
     const initialTime = 3 * 60;
@@ -52,11 +57,11 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
 
     function handleInput(event) {
 
-        if (!startTime) {
-            const now = Date.now();
-            setStartTime(now);
-            console.log("startTime: ", now);
-        }
+        // if (!startTime) {
+        //     const now = Date.now();
+        //     setStartTime(now);
+        //     console.log("startTime: ", now);
+        // }
         let value = event.target.value;
         console.log("typeof :", typeof (value))
         console.log("value: ", value);
@@ -98,28 +103,36 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
     }
 
     useEffect(() => {
+        if (gameStarted) {
+            const timerInterval = setInterval(() => {
+                setTimeRemaining((prevTime) => {
+                    if (gameFinish) {
+                        clearInterval(timerInterval);
+                        console.log('game completed!');
+                        return timeRemaining;
+                    } else if (prevTime === 0) {
+                        clearInterval(timerInterval);
+                        console.log('Countdown complete!');
+                        return 0;
+                    } else {
+                        return prevTime - 1;
+                    }
+                });
+            }, 1000);
 
-        const timerInterval = setInterval(() => {
-            setTimeRemaining((prevTime) => {
-                if (gameFinish) {
-                    clearInterval(timerInterval);
-                    console.log('game completed!');
-                    return timeRemaining;
-                } else if (prevTime === 0) {
-                    clearInterval(timerInterval);
-                    // Perform actions when the timer reaches zero
-                    console.log('Countdown complete!');
-                    return 0;
-                } else {
-                    return prevTime - 1;
-                }
-            });
-        }, 1000);
+            return () => clearInterval(timerInterval);
+        }
 
-        // Cleanup the interval when the component unmounts
-        return () => clearInterval(timerInterval);
-    }, [gameFinish]); // The empty 
+    }, [gameFinish, gameStarted]);
 
+    useEffect(() => { //AI
+        if (!gameStarted) {
+            const interval = setInterval(() => {
+                setNow(Date.now());
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [gameStarted]);
 
 
 
@@ -174,6 +187,14 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 <h3>You </h3>
                 <progress value={progress} max={100} />
             </div> */}
+            <div>
+                <div>
+                    game started:{gameStarted + ''}
+                </div>
+                {!gameStarted && startTime && (
+                    <h3>Game starts in :{Math.max(0, Math.floor((startTime - now) / 1000))}s</h3>
+                )}
+            </div>
 
             <div className="message  has-text-centered">
                 <div className="message-header has-background-link has-text-light">
@@ -204,11 +225,12 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 <p className="has-text-success">{correctWordArr.join(" ")}</p>
             </div>
             <div>
-                <input className={`${userClassName} input`} disabled={gameFinish || timeRemaining === 0} type="text" name="userText" value={userInput} onChange={handleInput} onPaste={(e) => {
+                <input className={`${userClassName} input`} disabled={gameFinish || timeRemaining === 0 || !gameStarted} type="text" name="userText" value={userInput} onChange={handleInput} onPaste={(e) => {
                     e.preventDefault()
                     return false;
                 }} />
             </div>
+
             <div>
                 {
                     gameFinish &&

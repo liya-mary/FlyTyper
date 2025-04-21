@@ -15,7 +15,9 @@ export default function QuickPlay() {
     const [userWpmList, setUserWpmList] = useState({});
     const [progress, setProgress] = useState(0);
     const [userProgressObj, setUserProgressObj] = useState({});
-
+    const [startTime, setStartTime] = useState(null);
+    const [gameStarted, setGameStarted] = useState(false);
+    const [roomData, setRoomData] = useState({});
 
     // Function to send a message
     // const sendMessage = async () => {
@@ -51,6 +53,60 @@ export default function QuickPlay() {
             socket.emit('join', "My room");
         }
     }, [])
+
+    useEffect(() => {
+        if (gameFinish) {
+            const timeTaken = Date.now() - startTime;
+            socket.emit('gameFinish', socket.id, timeTaken);
+        }
+
+    }, [gameFinish])
+
+    useEffect(() => {
+        socket.on("roomData", (data) => {
+            console.log("roomData ", data);
+            setRoomData(data);
+            // const { startTime } = data;
+            // setStartTime(startTime);
+        })
+
+    }, [])
+
+
+
+    useEffect(() => {
+        const now = Date.now();
+        const delay = roomData.startTime - now;
+        console.log("delay : ", delay);
+
+        if (delay > 0) {
+            setTimeout(() => {
+                setGameStarted(true);
+            }, delay)
+        }
+
+
+    }, [roomData.startTime])
+
+    // useEffect(() => {
+    //     socket.on("startTime", (data) => {
+    //         console.log("startTime: ", data);
+    //         setStartTime(data);
+    //         const now = Date.now();
+    //         const delay = data - now;
+
+    //         if (delay > 0) {
+    //             setTimeout(() => {
+    //                 setGameStarted(true);
+    //             }, delay)
+    //         } else {
+    //             setGameStarted(true);
+    //         }
+    //     });
+    //     return () => {
+    //         socket.off("startTime");
+    //     }
+    // }, [])
     useEffect(() => {
         socket.on("user left", (data) => {
             console.log("socket left ", data);
@@ -69,14 +125,14 @@ export default function QuickPlay() {
 
     useEffect(() => {
         socket.on("usersWpm", (data) => {
-            console.log("usersWpm: ", data);
+            // console.log("usersWpm: ", data);
             setUserWpmList(data);
         })
     }, [])
 
     useEffect(() => {
         socket.on("usersProgress", (data) => {
-            console.log("usersProgress: ", data);
+            // console.log("usersProgress: ", data);
             setUserProgressObj(data);
         })
     }, [])
@@ -87,6 +143,10 @@ export default function QuickPlay() {
             setRandomParagraph(data);
         })
     },)
+
+
+
+
 
     return (
         <>
@@ -99,11 +159,13 @@ export default function QuickPlay() {
                                     <>
                                         <progress value={progress} max={100} />
                                         <li>your wpm: {wpm}</li>
+                                        <h5>Rank:{roomData.users[userid].rank}</h5>
                                     </>
                                 ) : (
                                     <>
                                         <progress value={userProgressObj[userid]} max={100} />
                                         <li>Guest wpm: {userWpmList[userid]}</li>
+                                        <h5>Rank:{roomData.users[userid].rank}</h5>
                                     </>
                                 )}
                             </div>
@@ -115,7 +177,7 @@ export default function QuickPlay() {
             </div>
             <div>
                 <Typer randomParagraph={randomParagraph}
-                    gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={wpm} handleWpm={handleWpm} progress={progress} handleProgress={handleProgress} />
+                    gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={wpm} handleWpm={handleWpm} progress={progress} handleProgress={handleProgress} startTime={roomData.startTime} gameStarted={gameStarted} />
             </div>
 
         </>

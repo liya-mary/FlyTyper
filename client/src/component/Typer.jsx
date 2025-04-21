@@ -188,9 +188,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 <progress value={progress} max={100} />
             </div> */}
             <div>
-                <div>
-                    game started:{gameStarted + ''}
-                </div>
                 {!gameStarted && startTime && (
                     <h3>Game starts in :{Math.max(0, Math.floor((startTime - now) / 1000))}s</h3>
                 )}

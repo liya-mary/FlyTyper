@@ -7,11 +7,27 @@ function SoloPlay() {
     const [paragraphList, setParagraphList] = useState([]);
     const [randomParagraph, setRandomParagraph] = useState('');
     const [gameFinish, setGameFinish] = useState(false);
+    const [wpm, setWpm] = useState(0);
+    const [progress, setProgress] = useState(0);
+    const [gameStarted, setGameStarted] = useState(false);
+    const [startTime, setStartTime] = useState(null);
+
+
 
     const handleGameFinish = () => {
         setGameFinish(true);
 
     }
+    const handleWpm = (currWpm) => {
+        // console.log("wpm from parent: ", currWpm);
+        setWpm(currWpm);
+
+    }
+    const handleProgress = (progress) => {
+        console.log("new progress: ", progress);
+        setProgress(progress);
+    }
+
 
     useEffect(() => {
         fetch('/message.json').then((response) => {
@@ -24,6 +40,30 @@ function SoloPlay() {
         })
     }, [])
 
+    useEffect(() => { //AI
+        if (!gameStarted) {
+            const countDown = 10;
+            const startTime = Date.now() + countDown * 1000;
+            setStartTime(startTime);
+        }
+    }, []);
+
+    useEffect(() => {
+        const now = Date.now();
+        const delay = startTime - now;
+        console.log("delay solo play: ", delay);
+
+        if (delay > 0) {
+            setTimeout(() => {
+                setGameStarted(true);
+            }, delay)
+        }
+
+
+    }, [startTime])
+
+
+
     if (!paragraphList || paragraphList.length === 0) {
         return <div>Loading messages...</div>;
     }
@@ -32,7 +72,7 @@ function SoloPlay() {
 
         < >
             <h1 className="is-size-1">Solo Play</h1>
-            <Typer randomParagraph={randomParagraph} gameFinish={gameFinish} handleGameFinish={handleGameFinish} />
+            <Typer randomParagraph={randomParagraph} gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={wpm} handleWpm={handleWpm} progress={progress} handleProgress={handleProgress} startTime={startTime} gameStarted={gameStarted} />
 
         </>
 

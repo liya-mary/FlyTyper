@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import React from 'react';
 import PropTypes from 'prop-types';
 // import { useNavigate } from 'react-router-dom';
@@ -32,6 +32,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
     };
 
     const initialTime = 3 * 60;
+    const inputReference = useRef(null);
     const [timeRemaining, setTimeRemaining] = useState(initialTime);
     // let navigate = useNavigate();
 
@@ -131,6 +132,8 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 setNow(Date.now());
             }, 1000);
             return () => clearInterval(interval);
+        } else {
+            inputReference.current?.focus();
         }
     }, [gameStarted]);
 
@@ -213,7 +216,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 </div>
                 <div className="column is-one-quarter">
                     <h4>Time Remaining </h4>
-                    <h4>{timeRemaining}</h4>
+                    <h4>{new Date(timeRemaining * 1000).toISOString().substring(14, 19)}</h4>
                 </div>
             </div>
 
@@ -225,7 +228,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 <input className={`${userClassName} input`} disabled={gameFinish || timeRemaining === 0 || !gameStarted} type="text" name="userText" value={userInput} onChange={handleInput} onPaste={(e) => {
                     e.preventDefault()
                     return false;
-                }} />
+                }} ref={inputReference} />
             </div>
 
             <div>

@@ -24,9 +24,7 @@ const io = new Server(server, {
     },
 });
 
-const roomParagraphs = {};
-const usersWpm = {};
-const usersProgress = {};
+
 const roomData = {};
 
 
@@ -39,9 +37,15 @@ io.on('connection', socket => {
         if (!roomData[room]) {
             const countDown = 10;
             const startTime = Date.now() + countDown * 1000;
+            const paragraphList = JSON.parse(fs.readFileSync('./message.json', 'utf-8'));
+            const randomIndex = Math.floor(Math.random() * paragraphList.length);
+            const randomPara = paragraphList[randomIndex].text;
+            console.log("random para server: ", randomPara);
+
             roomData[room] = { //AI code
                 startTime: startTime,
                 gameStarted: false,
+                roomParagraph: randomPara,
                 users: {
                     // abc: { time: 0 }
 
@@ -52,39 +56,27 @@ io.on('connection', socket => {
 
         const id = socket.id;
         console.log("id here: ", id);
-        roomData[room].users[id] = {};
-        console.log("user updated: ", roomData[room]);
-        usersWpm[socket.id] = 0;
-        usersProgress[socket.id] = 0;
-
-
         console.log(id + ' joined room: ' + room);
-        let roomUsers = await io.in(room).fetchSockets()
-        const socketIds = roomUsers.map(s => s.id);
-        console.log("roomUsers: ", socketIds);
+
+        roomData[room].users[id] = {};
+        roomData[room].users[id].userWpm = 0;
+        roomData[room].users[id].userProgress = 0;
+
+
+        console.log("user updated: ", roomData[room]);
+        // usersWpm[socket.id] = 0;
+        // usersProgress[socket.id] = 0;
+
+
+        io.to(room).emit('roomData', roomData[room]);
+
+
+        // let roomUsers = await io.in(room).fetchSockets()
+        // const socketIds = roomUsers.map(s => s.id);
+        // console.log("roomUsers: ", socketIds);
         // io.to(room).emit('receive_message', id);
 
 
-        // if (!roomData[room].gameStarted) {
-        //     // roomData[room].gameStarted = true;
-        //     const countDown = 10;
-        //     const startTime = Date.now() + countDown * 1000;
-        //     console.log("start time: ", startTime);
-        //     roomData[room].startTime = startTime;
-        //     io.to(room).emit("startTime", startTime);
-        // }
-
-        //fetching random para
-        io.to(room).emit('userList', socketIds);
-        if (!roomParagraphs[room]) {
-            const paragraphList = JSON.parse(fs.readFileSync('./message.json', 'utf-8'));
-            const randomIndex = Math.floor(Math.random() * paragraphList.length);
-            const randomPara = paragraphList[randomIndex].text;
-            console.log("random para server: ", randomPara);
-            roomParagraphs[room] = "Test message";
-        }
-
-        io.to(room).emit('randomPara', roomParagraphs[room]);
         //game Finish
         socket.on("gameFinish", (userId, timeTaken) => {
             const currUser = roomData[room].users[userId];
@@ -107,28 +99,24 @@ io.on('connection', socket => {
                 console.log("user ranks: ", users[userId]["rank"]);
             })
 
-
-
-
             io.to(room).emit('roomData', roomData[room]);
         })
 
 
 
         socket.on("trackWpm", (currWpm) => {
-            usersWpm[socket.id] = currWpm;
-            io.to(room).emit('usersWpm', usersWpm);
+            roomData[room].users[socket.id].userWpm = currWpm;
+            // console.log("curr wpm in server: ", roomData[room].users[socket.id].userWpm);
+            io.to(room).emit('roomData', roomData[room]);
+
         })
 
         socket.on("trackProgress", (currProgress) => {
-            usersProgress[socket.id] = currProgress;
-            io.to(room).emit('usersProgress', usersProgress);
+            roomData[room].users[socket.id].userProgress = currProgress;
+            console.log("currprogress in server: ", roomData[room].users[socket.id].userProgress);
+            io.to(room).emit('roomData', roomData[room]);
+
         })
-
-        io.to(room).emit('roomData', roomData[room]);
-
-
-
 
     });
     socket.on('leave', function (room) {
@@ -146,19 +134,6 @@ io.on('connection', socket => {
 
 });
 
-
-// // Listen for incoming Socket.IO connections
-// io.on("connection", (socket) => {
-//     console.log("User connected ", socket.id); // Log the socket ID of the connected user
-
-//     // Listen for "send_message" events from the connected client
-//     socket.on("send_message", (data) => {
-//         console.log("Message Received ", data); // Log the received message data
-
-//         // Emit the received message data to all connected clients
-//         io.emit("receive_message", "recievde data meeh");
-//     });
-// });
 
 db.sequelize.sync().then(() => {
     console.log("SQL database is connected");

@@ -8,16 +8,11 @@ const socket = io.connect('http://localhost:3000');
 
 
 export default function QuickPlay() {
-    const [userList, setUserList] = useState([]);
-    const [randomParagraph, setRandomParagraph] = useState();
     const [gameFinish, setGameFinish] = useState(false);
-    const [wpm, setWpm] = useState(0);
-    const [userWpmList, setUserWpmList] = useState({});
-    const [progress, setProgress] = useState(0);
-    const [userProgressObj, setUserProgressObj] = useState({});
     const [startTime, setStartTime] = useState(null);
     const [gameStarted, setGameStarted] = useState(false);
     const [roomData, setRoomData] = useState({});
+    const [users, setUsers] = useState({});
 
     // Function to send a message
     // const sendMessage = async () => {
@@ -36,16 +31,11 @@ export default function QuickPlay() {
 
     }
     const handleProgress = (progress) => {
-        console.log("new progress: ", progress);
-        setProgress(progress);
         socket.emit("trackProgress", progress);
     }
 
     const handleWpm = (currWpm) => {
-        // console.log("wpm from parent: ", currWpm);
-        setWpm(currWpm);
         socket.emit("trackWpm", currWpm);
-
     }
 
     useEffect(() => {
@@ -66,13 +56,11 @@ export default function QuickPlay() {
         socket.on("roomData", (data) => {
             console.log("roomData ", data);
             setRoomData(data);
-            // const { startTime } = data;
-            // setStartTime(startTime);
+            console.log("userss: ", data.users);
+            setUsers(data.users);
         })
 
     }, [])
-
-
 
     useEffect(() => {
         const now = Date.now();
@@ -85,28 +73,8 @@ export default function QuickPlay() {
             }, delay)
         }
 
-
     }, [roomData.startTime])
 
-    // useEffect(() => {
-    //     socket.on("startTime", (data) => {
-    //         console.log("startTime: ", data);
-    //         setStartTime(data);
-    //         const now = Date.now();
-    //         const delay = data - now;
-
-    //         if (delay > 0) {
-    //             setTimeout(() => {
-    //                 setGameStarted(true);
-    //             }, delay)
-    //         } else {
-    //             setGameStarted(true);
-    //         }
-    //     });
-    //     return () => {
-    //         socket.off("startTime");
-    //     }
-    // }, [])
     useEffect(() => {
         socket.on("user left", (data) => {
             console.log("socket left ", data);
@@ -115,50 +83,17 @@ export default function QuickPlay() {
     }, [])
 
 
-    useEffect(() => {
-        socket.on("userList", (data) => {
-            console.log("userList: ", data);
-            setUserList(data);
-        })
-    },)
-
-
-    useEffect(() => {
-        socket.on("usersWpm", (data) => {
-            // console.log("usersWpm: ", data);
-            setUserWpmList(data);
-        })
-    }, [])
-
-    useEffect(() => {
-        socket.on("usersProgress", (data) => {
-            // console.log("usersProgress: ", data);
-            setUserProgressObj(data);
-        })
-    }, [])
-
-    useEffect(() => {
-        socket.on("randomPara", (data) => {
-            console.log("userList: ", data);
-            setRandomParagraph(data);
-        })
-    },)
-
-
-
-
-
     return (
         <>
             <div>
                 {
-                    userList.length > 0 && Object.keys(userWpmList).length > 0 && Object.keys(userProgressObj).length > 0 ? (
-                        userList.map((userid) => {
+                    Object.keys(users).length > 0 ? (
+                        Object.keys(users).map((userid) => {
                             return <div key={userid}>
                                 {userid === socket.id ? (
                                     <>
-                                        <progress value={progress} max={100} />
-                                        <li>your wpm: {wpm}</li>
+                                        <progress value={roomData.users[userid].userProgress} max={100} />
+                                        <li>your wpm: {roomData.users[userid].userWpm}</li>
                                         {/* Ai */}
                                         {roomData.users[userid]?.rank != null && (
                                             <h5>Rank: {roomData.users[userid].rank}</h5>
@@ -166,8 +101,8 @@ export default function QuickPlay() {
                                     </>
                                 ) : (
                                     <>
-                                        <progress value={userProgressObj[userid]} max={100} />
-                                        <li>Guest wpm: {userWpmList[userid]}</li>
+                                        <progress value={roomData.users[userid].userProgress} max={100} />
+                                        <li>Guest wpm: {roomData.users[userid].userWpm}</li>
                                         {roomData.users[userid]?.rank != null && (
                                             <h5>Rank: {roomData.users[userid].rank}</h5>
                                         )}
@@ -181,8 +116,8 @@ export default function QuickPlay() {
                 }
             </div>
             <div>
-                <Typer randomParagraph={randomParagraph}
-                    gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={wpm} handleWpm={handleWpm} progress={progress} handleProgress={handleProgress} startTime={roomData.startTime} gameStarted={gameStarted} />
+                <Typer randomParagraph={roomData.roomParagraph}
+                    gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={roomData.users?.[socket.id]?.userWpm} handleWpm={handleWpm} progress={0} handleProgress={handleProgress} startTime={roomData.startTime} gameStarted={gameStarted} />
             </div>
 
         </>

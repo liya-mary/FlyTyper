@@ -159,19 +159,24 @@ export default function QuickPlay() {
                                     <>
                                         <progress value={progress} max={100} />
                                         <li>your wpm: {wpm}</li>
-                                        <h5>Rank:{roomData.users[userid].rank}</h5>
+                                        {/* Ai */}
+                                        {roomData.users[userid]?.rank != null && (
+                                            <h5>Rank: {roomData.users[userid].rank}</h5>
+                                        )}
                                     </>
                                 ) : (
                                     <>
                                         <progress value={userProgressObj[userid]} max={100} />
                                         <li>Guest wpm: {userWpmList[userid]}</li>
-                                        <h5>Rank:{roomData.users[userid].rank}</h5>
+                                        {roomData.users[userid]?.rank != null && (
+                                            <h5>Rank: {roomData.users[userid].rank}</h5>
+                                        )}
                                     </>
                                 )}
                             </div>
                         })
                     ) : (
-                        <p>Uploading wpm...</p>
+                        <p></p>
                     )
                 }
             </div>

@@ -190,56 +190,60 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 <h3>You </h3>
                 <progress value={progress} max={100} />
             </div> */}
-            <div>
+            <div className="columns column is-8 is-offset-4 has-text-centered  ">
                 {!gameStarted && startTime && (
-                    <h3>Game starts in :{Math.max(0, Math.floor((startTime - now) / 1000))}s</h3>
+                    <h2 className="has-text-weight-semibold is-size-4 has-text-success " >Game starts in :{Math.max(0, Math.floor((startTime - now) / 1000))}s</h2>
                 )}
-            </div>
-
-            <div className="message  has-text-centered">
-                <div className="message-header has-background-link has-text-light">
-                    <p>Snippet</p>
-                </div>
-                <div className="message-body ">
-                    <h3 className="random-paragraph">{randomParagraph}</h3>
-                </div>
-
-            </div>
-            <div className="columns is-multiline is-mobile">
-                <div className="column is-one-quarter  ">
-                    <h4>wpm</h4>
-                    <h4>{wpm} </h4>
-                </div>
-                <div className="column is-one-quarter">
-                    <h4>Accuracy </h4>
-                    <h4>{accuracy}%</h4>
-                </div>
-                <div className="column is-one-quarter">
-                    <h4>Time Remaining </h4>
-                    <h4>{new Date(timeRemaining * 1000).toISOString().substring(14, 19)}</h4>
-                </div>
-            </div>
-
-            <div>
-                <h3>Correct Words:</h3>
-                <p className="has-text-success">{correctWordArr.join(" ")}</p>
-            </div>
-            <div>
-                <input className={`${userClassName} input`} disabled={gameFinish || timeRemaining === 0 || !gameStarted} type="text" name="userText" value={userInput} onChange={handleInput} onPaste={(e) => {
-                    e.preventDefault()
-                    return false;
-                }} ref={inputReference} />
             </div>
 
             <div>
                 {
                     gameFinish &&
                     <div>
-                        <h2>You Finished the race yayy... </h2>
-                        <button className="button is-yellow has-background-link has-text-light" onClick={buttonHandler}>Play Again</button>
+                        <h2 className="has-text-weight-semibold is-size-4 has-text-success">You Finished the race yayy... </h2>
+                        <button className="button is-yellow has-background-link has-text-light is-medium mb-4 " onClick={buttonHandler}>Play Again</button>
                     </div>
                 }
             </div>
+
+            <div className="message  has-text-centered is-size-4 ">
+                <div className="message-header has-background-link has-text-light">
+                    <p>Snippet</p>
+                </div>
+                <div className="message-body has-background-white ">
+                    <h3 className="is-size-5" ><strong>{randomParagraph}</strong></h3>
+                </div>
+
+            </div>
+
+
+            <div>
+                <h3>Correct Words:</h3>
+                <p className="has-text-success">{correctWordArr.join(" ")}</p>
+            </div>
+            <div className="mt-4">
+                <input className={`${userClassName} input`} disabled={gameFinish || timeRemaining === 0 || !gameStarted} type="text" name="userText" value={userInput} onChange={handleInput} onPaste={(e) => {
+                    e.preventDefault()
+                    return false;
+                }} ref={inputReference} />
+            </div>
+
+            <div className="columns  is-mobile mt-4 message ">
+                <div className="column is-two-quarters ">
+                    <h4 className="message-header has-background-link has-text-white ">wpm</h4>
+                    <h4 className="message-body has-background-white ">{wpm} </h4>
+                </div>
+                <div className="column is-two-quarters">
+                    <h4 className="message-header has-background-link has-text-white ">Accuracy </h4>
+                    <h4 className="message-body has-background-white ">{accuracy}%</h4>
+                </div>
+                <div className="column is-two-quarters">
+                    <h4 className=" message-header has-background-link has-text-white ">Timer</h4>
+                    <h4 className="message-body has-background-white ">{new Date(timeRemaining * 1000).toISOString().substring(14, 19)}</h4>
+                </div>
+            </div>
+
+
 
         </div>
     )

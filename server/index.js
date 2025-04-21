@@ -30,13 +30,26 @@ const roomData = {};
 
 io.on('connection', socket => {
     //On join room
-    console.log("User connected ", socket.id); // Log the socket ID of the connected user
+    console.log("User connected ", socket.id);
 
-    socket.on('join', async room => {
+    socket.on('join', async () => {
+        let room = Object.keys(roomData)
+            .find((key) => {
+                return roomData[key].gameStarted == false;
+            });
+        if (room == undefined) {
+            room = "room" + Object.keys(roomData).length
+        }
         socket.join(room);
+
+
         if (!roomData[room]) {
             const countDown = 10;
             const startTime = Date.now() + countDown * 1000;
+            setTimeout(() => {
+                console.log("starting the game");
+                roomData[room].gameStarted = true;
+            }, countDown * 1000);
             const paragraphList = JSON.parse(fs.readFileSync('./message.json', 'utf-8'));
             const randomIndex = Math.floor(Math.random() * paragraphList.length);
             const randomPara = paragraphList[randomIndex].text;
@@ -113,7 +126,7 @@ io.on('connection', socket => {
 
         socket.on("trackProgress", (currProgress) => {
             roomData[room].users[socket.id].userProgress = currProgress;
-            console.log("currprogress in server: ", roomData[room].users[socket.id].userProgress);
+            // console.log("currprogress in server: ", roomData[room].users[socket.id].userProgress);
             io.to(room).emit('roomData', roomData[room]);
 
         })

@@ -1,11 +1,10 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  background-color: rgb(243, 241, 241);
 }
 
-.logo {
+/* .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
@@ -25,8 +24,8 @@
   to {
     transform: rotate(360deg);
   }
-}
-
+} */
+/* 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
@@ -39,123 +38,29 @@
 
 .read-the-docs {
   color: #888;
-}
-
-/* typer component */
-
-.message-box{
-  /* background-color: purple; */
-  /* background-color: lightblue; */
-
-  /* color: white; */
-  /* padding: 30px; */
-}
-
-
-.user-input-error{
-  width: 70%;
-  height: 60px;
-  margin: 20px;
-  background-color: rgb(186, 108, 108);
-
-}
-
-.user-input-correct{
-  width: 70%;
-  height: 60px;
-  margin: 20px;
-  background-color: rgb(99, 204, 131);
-
-}
-
-.user-input{
-  width: 70%;
-  height: 60px;
-  margin: 20px;
-
-}
-/* .random-paragraph{
-  color: red;
 } */
 
-.error-char{
-  color: red;
+.navbar-item.custom-hover:hover {
+  background-color: rgb(55, 55, 220); /* replace with your desired color */
 }
-.correct-char{
-  color: green;
-}
-
-
-/* Navbar */
-
-/* .navbarComponent{
-  display: flex;
-  justify-content: space-around;
-  background-color: purple;
-  height: 100px;
-  margin: 0 auto; width: 960px;
-  color: white;
-  /* position: sticky;
-  top: 0; */
-} */
-
-
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: purple;
-  color: #fff;
-  padding: 1rem;
-}
-
-.navbar-left .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
-  text-decoration: none;
-}
-
-.navbar-center .nav-links {
-  list-style-type: none;
-  display: flex;
+html, body, #root {
+  height: 100%;
   margin: 0;
-  padding: 0;
 }
 
-.navbar-center .nav-links li {
-  margin-right: 1rem;
-}
-
-.navbar-center .nav-links a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.navbar-right {
+.layout {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-
-.navbar-right {
-  color: #fff;
-  text-decoration: none;
-  margin-left: 1rem;
-  position: relative;
+.content-area {
+  flex: 1;
+  overflow: auto;
 }
 
-/* Dashboard */
-.dashboard-container button{
-  color: white;
-  background-color: ;
-  margin: 20px;
-  padding: 20px;
+.footer-height {
 
+  height: auto; 
+  padding: 1rem 0; 
 }
-
-.dashboard-container{
-  background-color: rgb(240, 240, 240);
-}
-

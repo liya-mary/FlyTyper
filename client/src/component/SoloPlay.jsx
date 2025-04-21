@@ -69,12 +69,28 @@ function SoloPlay() {
     }
 
     return (
+        <section className="hero ">
+            <div className="hero-body">
+                <div className="container">
+                    <div className="columns">
 
-        < >
-            <h1 className="is-size-1">Solo Play</h1>
-            <Typer randomParagraph={randomParagraph} gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={wpm} handleWpm={handleWpm} progress={progress} handleProgress={handleProgress} startTime={startTime} gameStarted={gameStarted} />
+                        < div className="column is-8 is-offset-2   mt-4">
+                            <h1 className="is-size-2 has-text-weight-semibold is-family-secondary">Solo Play</h1>
+                            <div className="columns is-mobile is-vcentered  is-10 is-offset-2 mt-4">
+                                <h4 className="column is-one-quarter"> Progress:</h4>
+                                <div className="column is-6">
+                                    <progress className=" progress is-success is-normal has-background-white" value={progress} max={100} />
 
-        </>
+                                </div>
+                            </div>
+
+                            <Typer randomParagraph={randomParagraph} gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={wpm} handleWpm={handleWpm} progress={progress} handleProgress={handleProgress} startTime={startTime} gameStarted={gameStarted} />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     )
 }

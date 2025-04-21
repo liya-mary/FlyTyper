@@ -40,7 +40,7 @@ export default function QuickPlay() {
 
     useEffect(() => {
         if (socket) {
-            socket.emit('join', "My room");
+            socket.emit('join');
         }
     }, [])
 
@@ -85,40 +85,62 @@ export default function QuickPlay() {
 
     return (
         <>
-            <div>
-                {
-                    Object.keys(users).length > 0 ? (
-                        Object.keys(users).map((userid) => {
-                            return <div key={userid}>
-                                {userid === socket.id ? (
-                                    <>
-                                        <progress value={roomData.users[userid].userProgress} max={100} />
-                                        <li>your wpm: {roomData.users[userid].userWpm}</li>
-                                        {/* Ai */}
-                                        {roomData.users[userid]?.rank != null && (
-                                            <h5>Rank: {roomData.users[userid].rank}</h5>
-                                        )}
-                                    </>
+            <section className="hero ">
+                <div className="hero-body">
+                    <div className="container">
+                        <div className="columns"></div>
+                        < div className="column is-8 is-offset-2   mt-4 ">
+
+                            <h1 className="is-size-2 has-text-weight-semibold is-family-secondary">Quick Play</h1>
+
+
+                            {
+                                Object.keys(users).length > 0 ? (
+                                    Object.keys(users).map((userid) => {
+                                        return <div key={userid}>
+                                            {userid === socket.id ? (
+                                                <div className='columns is-mobile is-vcentered  is-10 is-offset-2 mt-4'>
+                                                    <h4 className='column is-one-quarter has-text-weight-semibold   '>you : {roomData.users[userid].userWpm} wpm</h4>
+
+                                                    <progress value={roomData.users[userid].userProgress} max={100} className="progress is-success is-normal  has-background-white  is-6" />
+
+                                                    {/* Ai */}
+                                                    {roomData.users[userid]?.rank != null && (
+                                                        <h5 className='column has-text-weight-semibold '>Rank: {roomData.users[userid].rank}</h5>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <div className='columns is-mobile is-vcentered  is-10 is-offset-2 mt-4  '>
+                                                    <h4 className='column is-one-quarter has-text-weight-semibold   '>Guest : {roomData.users[userid].userWpm} wpm</h4>
+                                                    <div className="column is-6">
+                                                        <progress value={roomData.users[userid].userProgress} max={100} className="progress is-success is-normal  
+                                                    is-four-quarter has-background-white  is-6" />
+                                                    </div>
+
+
+
+                                                    {roomData.users[userid]?.rank != null && (
+                                                        <h5 className='column is-one-quarter has-text-weight-semibold '>Rank: {roomData.users[userid].rank}</h5>
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
+                                    })
                                 ) : (
-                                    <>
-                                        <progress value={roomData.users[userid].userProgress} max={100} />
-                                        <li>Guest wpm: {roomData.users[userid].userWpm}</li>
-                                        {roomData.users[userid]?.rank != null && (
-                                            <h5>Rank: {roomData.users[userid].rank}</h5>
-                                        )}
-                                    </>
-                                )}
+                                    <p></p>
+                                )
+                            }
+
+                            <div>
+                                <Typer randomParagraph={roomData.roomParagraph}
+                                    gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={roomData.users?.[socket.id]?.userWpm} handleWpm={handleWpm} progress={0} handleProgress={handleProgress} startTime={roomData.startTime} gameStarted={gameStarted} />
                             </div>
-                        })
-                    ) : (
-                        <p></p>
-                    )
-                }
-            </div>
-            <div>
-                <Typer randomParagraph={roomData.roomParagraph}
-                    gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={roomData.users?.[socket.id]?.userWpm} handleWpm={handleWpm} progress={0} handleProgress={handleProgress} startTime={roomData.startTime} gameStarted={gameStarted} />
-            </div>
+                        </div>
+                    </div>
+                </div>
+            </section >
+
+
 
         </>
 

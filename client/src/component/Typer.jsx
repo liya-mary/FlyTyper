@@ -15,6 +15,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
     const [accuracy, setAccuracy] = useState(100);
     const [characterErrorCount, setCharacterErrorCount] = useState(0);
     const [now, setNow] = useState(Date.now());
+    const [timeTaken, setTimeTaken] = useState(0);
 
 
     Typer.propTypes = { //AI code
@@ -109,7 +110,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 setTimeRemaining((prevTime) => {
                     if (gameFinish) {
                         clearInterval(timerInterval);
-                        // const timeTaken=Date.now()-
                         console.log('game completed!');
                         return timeRemaining;
                     } else if (prevTime === 0) {
@@ -156,9 +156,12 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
         // console.log("time taken: ", timeTaken);
         let currwpm = Math.round((wordcount / timeTaken));
         console.log("currwpm: ", currwpm + " wpm");
+        if (gameStarted) {
+            setTimeTaken(timeTaken);
+        }
         // setWpm(currwpm);
         handleWpm(currwpm);
-    }, [timeRemaining]);
+    }, [timeRemaining, gameStarted]);
 
     //calculate accuracy
     useEffect(() => {
@@ -210,6 +213,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
             <div className="message  is-size-4 ">
                 <div className="message-header has-background-link has-text-light">
                     <p>Snippet</p>
+                    <p>{new Date(timeRemaining * 1000).toISOString().substring(14, 19)}</p>
                 </div>
                 <div className="message-body has-background-white ">
                     <h3 className="is-size-5" ><strong>{randomParagraph}</strong></h3>
@@ -240,7 +244,8 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 </div>
                 <div className="column ">
                     <h4 className=" message-header has-background-link has-text-white has-text-centered ">Timer</h4>
-                    <h4 className="message-body has-background-white ">{new Date(timeRemaining * 1000).toISOString().substring(14, 19)}</h4>
+                    {/* <h4 className="message-body has-background-white ">{new Date(timeRemaining * 1000).toISOString().substring(14, 19)}</h4> */}
+                    <h4 className="message-body has-background-white ">{new Date(timeTaken * 60 * 1000).toISOString().substring(14, 19)}</h4>
                 </div>
             </div>
 

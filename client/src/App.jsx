@@ -9,7 +9,7 @@ function App() {
 
   return (
 
-    < div className='layout'>
+    < div className='layout has-background-white-ter'>
       <Router>
         <Navbar />
         <Dashboard />

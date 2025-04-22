@@ -109,6 +109,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 setTimeRemaining((prevTime) => {
                     if (gameFinish) {
                         clearInterval(timerInterval);
+                        // const timeTaken=Date.now()-
                         console.log('game completed!');
                         return timeRemaining;
                     } else if (prevTime === 0) {
@@ -190,7 +191,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 <h3>You </h3>
                 <progress value={progress} max={100} />
             </div> */}
-            <div className="columns column is-8 is-offset-4 has-text-centered  ">
+            <div className="columns column is-8  has-text-centered  ">
                 {!gameStarted && startTime && (
                     <h2 className="has-text-weight-semibold is-size-4 has-text-success " >Game starts in :{Math.max(0, Math.floor((startTime - now) / 1000))}s</h2>
                 )}
@@ -206,7 +207,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 }
             </div>
 
-            <div className="message  has-text-centered is-size-4 ">
+            <div className="message  is-size-4 ">
                 <div className="message-header has-background-link has-text-light">
                     <p>Snippet</p>
                 </div>
@@ -229,16 +230,16 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
             </div>
 
             <div className="columns  is-mobile mt-4 message ">
-                <div className="column is-two-quarters ">
-                    <h4 className="message-header has-background-link has-text-white ">wpm</h4>
-                    <h4 className="message-body has-background-white ">{wpm} </h4>
+                <div className="column is-two-quarters has-text-centered ">
+                    <h4 className="message-header has-background-link has-text-white is-centered has-text-weight-semibold ">wpm</h4>
+                    <h4 className="message-body has-background-white  ">{wpm} </h4>
                 </div>
-                <div className="column is-two-quarters">
-                    <h4 className="message-header has-background-link has-text-white ">Accuracy </h4>
+                <div className="column is-two-quarters has-text-centered  ">
+                    <h4 className="message-header has-background-link has-text-white  has-text-centered  ">Accuracy </h4>
                     <h4 className="message-body has-background-white ">{accuracy}%</h4>
                 </div>
-                <div className="column is-two-quarters">
-                    <h4 className=" message-header has-background-link has-text-white ">Timer</h4>
+                <div className="column ">
+                    <h4 className=" message-header has-background-link has-text-white has-text-centered ">Timer</h4>
                     <h4 className="message-body has-background-white ">{new Date(timeRemaining * 1000).toISOString().substring(14, 19)}</h4>
                 </div>
             </div>

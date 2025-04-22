@@ -114,7 +114,7 @@ export default function QuickPlay() {
                                                     <h4 className='column is-one-quarter has-text-weight-semibold   '>Guest : {roomData.users[userid].userWpm} wpm</h4>
                                                     <div className="column is-6">
                                                         <progress value={roomData.users[userid].userProgress} max={100} className="progress is-success is-normal  
-                                                    is-four-quarter has-background-white  is-6" />
+                                                     has-background-white  is-6" />
                                                     </div>
 
 

@@ -10,7 +10,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
     const [wordsArr, setWordsArr] = useState([]);
     const [wordsArrIndex, setWordsArrIndex] = useState(0);
     const [correctWordArr, setcorrectWordArr] = useState([]);
-    // const [startTime, setStartTime] = useState(null);
     const [userInput, setUserInput] = useState("");
     const [accuracy, setAccuracy] = useState(100);
     const [characterErrorCount, setCharacterErrorCount] = useState(0);
@@ -31,7 +30,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
 
 
     };
-
+    let foo;
     const initialTime = 3 * 60;
     const inputReference = useRef(null);
     const [timeRemaining, setTimeRemaining] = useState(initialTime);
@@ -58,12 +57,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
     }
 
     function handleInput(event) {
-
-        // if (!startTime) {
-        //     const now = Date.now();
-        //     setStartTime(now);
-        //     console.log("startTime: ", now);
-        // }
         let value = event.target.value;
         console.log("typeof :", typeof (value))
         console.log("value: ", value);
@@ -190,10 +183,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
 
     return (
         <div className="hero-body" >
-            {/* <div>
-                <h3>You </h3>
-                <progress value={progress} max={100} />
-            </div> */}
             <div className="columns column is-8  has-text-centered  ">
                 {!gameStarted && startTime && (
                     <h2 className="has-text-weight-semibold is-size-4 has-text-success " >Game starts in :{Math.max(0, Math.floor((startTime - now) / 1000))}s</h2>
@@ -204,7 +193,16 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 {
                     gameFinish &&
                     <div>
-                        <h2 className="has-text-weight-semibold is-size-4 has-text-success">You Finished the race yayy... </h2>
+                        <h1 className="has-text-weight-semibold is-size-4 has-text-success">You Finished the race yayy... </h1>
+                        <button className="button is-yellow has-background-link has-text-light is-medium mb-4 " onClick={buttonHandler}>Play Again</button>
+                    </div>
+                }
+            </div>
+            <div>
+                {
+                    timeRemaining == 0 &&
+                    <div>
+                        <h1 className="has-text-weight-semibold is-size-4 has-text-danger ">oopsie.. Timeout </h1>
                         <button className="button is-yellow has-background-link has-text-light is-medium mb-4 " onClick={buttonHandler}>Play Again</button>
                     </div>
                 }
@@ -216,15 +214,29 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                     <p>{new Date(timeRemaining * 1000).toISOString().substring(14, 19)}</p>
                 </div>
                 <div className="message-body has-background-white ">
-                    <h3 className="is-size-5" ><strong>{randomParagraph}</strong></h3>
+                    <h3 className="is-size-5" >
+                        <strong>
+                            {
+                                randomParagraph?.split('').map((char, index) => {
+                                    const userChar = correctWordArr.length == 0 ? userInput[index] : (correctWordArr.join(' ') + " " + userInput)[index];
+                                    let className = '';
+
+                                    if (userChar == null) {
+                                        className = 'has-text-black'; // not typed yet
+                                    } else if (userChar === char) {
+                                        className = 'has-text-success-30'; // correct
+                                    } else {
+                                        className = 'has-text-danger'; // incorrect
+                                    }
+                                    return (
+                                        <span key={index} className={className}>
+                                            {char}
+                                        </span>
+                                    );
+                                })}
+                        </strong></h3>
                 </div>
 
-            </div>
-
-
-            <div>
-                <h3>Correct Words:</h3>
-                <p className="has-text-success">{correctWordArr.join(" ")}</p>
             </div>
             <div className="mt-4">
                 <input className={`${userClassName} input`} disabled={gameFinish || timeRemaining === 0 || !gameStarted} type="text" name="userText" value={userInput} onChange={handleInput} onPaste={(e) => {
@@ -243,8 +255,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                     <h4 className="message-body has-background-white ">{accuracy}%</h4>
                 </div>
                 <div className="column ">
-                    <h4 className=" message-header has-background-link has-text-white has-text-centered ">Timer</h4>
-                    {/* <h4 className="message-body has-background-white ">{new Date(timeRemaining * 1000).toISOString().substring(14, 19)}</h4> */}
+                    <h4 className=" message-header has-background-link has-text-white has-text-centered ">Time</h4>
                     <h4 className="message-body has-background-white ">{new Date(timeTaken * 60 * 1000).toISOString().substring(14, 19)}</h4>
                 </div>
             </div>

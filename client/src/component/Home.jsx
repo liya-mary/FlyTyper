@@ -2,7 +2,6 @@
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import typer from '../assets/typer.svg';
-import anim from '../assets/anim.webm';
 
 
 function Home() {
@@ -29,13 +28,14 @@ function Home() {
           is-5-desktop 
           is-5-widescreen 
           is-5-fullhd " data-aos="fade-down">
-                            <h1 className="title titled is-size-1 mb-6 has-text-weight-bold mt-4">
+                            <h1 className="title titled is-size-1 mb-4 has-text-weight-bold mt-6">
+
                                 Welcome to Fly Typer
                             </h1>
                             <h3 className="subtitle"> Increase your typing speed while racing against others </h3>
-                            <div className="buttons">
-                                <button className="button is-yellow has-background-link is-large has-text-light ml-6 " onClick={soloPlayHandler}>Solo Play</button>
-                                <button className="button has-background-link is-large has-text-light ml-4" onClick={QuickPlayHandler}>Quick play</button>
+                            <div className="buttons ">
+                                <button className="button is-yellow has-background-link is-large has-text-light ml-4 mt-5 " onClick={soloPlayHandler}>Solo Play</button>
+                                <button className="button has-background-link is-large has-text-light ml-4 mt-5" onClick={QuickPlayHandler}>Quick play</button>
                             </div>
                         </div>
                         <div data-aos="fade-right" className="column

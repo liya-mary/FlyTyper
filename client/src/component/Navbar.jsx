@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import icon from '../../public/icon.png';
 
 
 function Navbar() {
@@ -10,6 +11,7 @@ function Navbar() {
         <div>
             <nav className="navbar has-background-link-65 columns is-3 " role="navigation" aria-label="main navigation">
                 <div className="navbar-brand ">
+
                     <a className="navbar-item has-text-light is-size-3 has-text-weight-bold  custom-hover m-4" href="/">
                         Fly Typer
                     </a>

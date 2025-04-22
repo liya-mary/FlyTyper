@@ -14,16 +14,6 @@ export default function QuickPlay() {
     const [roomData, setRoomData] = useState({});
     const [users, setUsers] = useState({});
 
-    // Function to send a message
-    // const sendMessage = async () => {
-
-    //     // Emit a socket event with the message details
-    //     socket.emit("send_message", {
-    //         senderId: "123",     // ID of the sender
-    //         receiverId: "456", // ID of the receiver
-    //         message: "Hello"   // The actual message content
-    //     });
-    // }
 
     const handleGameFinish = () => {
         setGameFinish(true);
@@ -99,25 +89,24 @@ export default function QuickPlay() {
                                     Object.keys(users).map((userid) => {
                                         return <div key={userid}>
                                             {userid === socket.id ? (
-                                                <div className='columns is-mobile is-vcentered  is-10 is-offset-2 mt-4'>
+                                                <div className='columns is-mobile is-vcentered  is-10 is-offset-2 mt-4 '>
                                                     <h4 className='column is-one-quarter has-text-weight-semibold   '>you : {roomData.users[userid].userWpm} wpm</h4>
 
-                                                    <progress value={roomData.users[userid].userProgress} max={100} className="progress is-success is-normal  has-background-white  is-6" />
+                                                    <div className="column is-6">
+                                                        <progress value={roomData.users[userid].userProgress} max={100} className="progress is-6 is-success is-normal   has-background-white  is-two-quater " />
+                                                    </div>
 
                                                     {/* Ai */}
                                                     {roomData.users[userid]?.rank != null && (
-                                                        <h5 className='column has-text-weight-semibold '>Rank: {roomData.users[userid].rank}</h5>
+                                                        <h5 className='column is-one-quarter has-text-weight-semibold '>Rank: {roomData.users[userid].rank}</h5>
                                                     )}
                                                 </div>
                                             ) : (
                                                 <div className='columns is-mobile is-vcentered  is-10 is-offset-2 mt-4  '>
                                                     <h4 className='column is-one-quarter has-text-weight-semibold   '>Guest : {roomData.users[userid].userWpm} wpm</h4>
                                                     <div className="column is-6">
-                                                        <progress value={roomData.users[userid].userProgress} max={100} className="progress is-success is-normal  
-                                                     has-background-white  is-6" />
+                                                        <progress value={roomData.users[userid].userProgress} max={100} className="progress  is-6 is-success is-normal  has-background-white " />
                                                     </div>
-
-
 
                                                     {roomData.users[userid]?.rank != null && (
                                                         <h5 className='column is-one-quarter has-text-weight-semibold '>Rank: {roomData.users[userid].rank}</h5>

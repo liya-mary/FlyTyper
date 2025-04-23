@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import icon from '../../public/icon.png';
 
 
 function Navbar() {

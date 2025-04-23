@@ -83,6 +83,7 @@ io.on('connection', socket => {
 
 
         //game Finish
+        // .=>string []-variable
         socket.on("gameFinish", (userId, timeTaken) => {
             const currUser = roomData[room].users[userId];
             console.log("curr user id : ", currUser);

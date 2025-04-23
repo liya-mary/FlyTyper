@@ -3,11 +3,12 @@
  "Fly Typer is an interactive multiplayer game where you compete against real players in real-time, racing to see who can type the fastest and most accurately."
    
 
-   ![/assets/page.png]
+![My page](client/src/assets/page.png)
 
-   ![assets/solopage.png]
-   
-   ![assets/quickplay.png]
+![My page](client/src/assets/solopage.png)
+
+![My page](client/src/assets/quickplay.png)
+
 ## Getting started
 
 - npm install in the client folder

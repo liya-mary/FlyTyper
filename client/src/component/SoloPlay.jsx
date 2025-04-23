@@ -1,4 +1,4 @@
-import Typer from "./Typer"
+import Typer from './Typer'
 import React from 'react';
 import { useEffect, useState } from "react"
 
@@ -32,7 +32,6 @@ function SoloPlay() {
     useEffect(() => {
         fetch('/message.json').then((response) => {
             response.json().then((data) => {
-                // console.log("data: ",data);
                 setParagraphList(data);
                 const randomIndex = Math.floor(Math.random() * data.length);
                 setRandomParagraph(data[randomIndex].text);

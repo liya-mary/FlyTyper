@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import Typer from './Typer';
-// import axios from 'axios'; // Import axios for API requests
 
 const socket = io.connect('http://localhost:3000');
 
@@ -17,7 +16,6 @@ export default function QuickPlay() {
 
     const handleGameFinish = () => {
         setGameFinish(true);
-        socket.emit("leave", "My room");
 
     }
     const handleProgress = (progress) => {
@@ -71,6 +69,19 @@ export default function QuickPlay() {
         })
 
     }, [])
+    // useEffect(() => {
+    //     const users = Object.keys(roomData.users);
+    //     const allRanked = users.every((userId) => {
+    //         const rank = roomData[userId]?.Rank;
+    //         return rank !== undefined && rank !== "undefined" && rank !== null;
+    //     });
+
+    //     if (allRanked) {
+    //         socket.emit("leave");
+    //     }
+
+
+    // }, [roomData])
 
 
     return (

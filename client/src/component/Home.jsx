@@ -32,7 +32,7 @@ function Home() {
 
                                 Welcome to Fly Typer
                             </h1>
-                            <h3 className="subtitle"> Increase your typing speed while racing against others </h3>
+                            <h3 className="subtitle"> Increase your typing speed while racing against others! </h3>
                             <div className="buttons ">
                                 <button className="button is-yellow has-background-link is-large has-text-light ml-4 mt-5 " onClick={soloPlayHandler}>Solo Play</button>
                                 <button className="button has-background-link is-large has-text-light ml-4 mt-5" onClick={QuickPlayHandler}>Quick play</button>
@@ -44,11 +44,6 @@ function Home() {
           is-4-desktop 
           is-7-widescreen 
           is-4-fullhd is-offset-1-fullhd">
-
-                            {/* <video className="image is-square" width="100%" autoPlay loop muted playsInline>
-                                    <source src={anim} type="video/webm" />
-                                    Your browser does not support the video tag.
-                                </video> */}
                             <figure className="image   is-square">
                                 <img src={typer} alt="Nice pic" />
                             </figure>

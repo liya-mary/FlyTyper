@@ -77,17 +77,9 @@ io.on('connection', socket => {
 
 
         console.log("user updated: ", roomData[room]);
-        // usersWpm[socket.id] = 0;
-        // usersProgress[socket.id] = 0;
 
 
         io.to(room).emit('roomData', roomData[room]);
-
-
-        // let roomUsers = await io.in(room).fetchSockets()
-        // const socketIds = roomUsers.map(s => s.id);
-        // console.log("roomUsers: ", socketIds);
-        // io.to(room).emit('receive_message', id);
 
 
         //game Finish
@@ -132,7 +124,8 @@ io.on('connection', socket => {
         })
 
     });
-    socket.on('leave', function (room) {
+    socket.on('leave', function () {
+        console.log("leave");
         // try {
         //     console.log('[socket]', 'leave room :', room);
         //     socket.leave(room);

@@ -30,11 +30,9 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
 
 
     };
-    let foo;
     const initialTime = 3 * 60;
     const inputReference = useRef(null);
     const [timeRemaining, setTimeRemaining] = useState(initialTime);
-    // let navigate = useNavigate();
 
     const buttonHandler = () => {
         console.log("button clicked");
@@ -175,7 +173,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
         if (correctWordArr.length > 0) {
             let newProgress = Math.round((correctWordArr.length / wordsArr.length) * 100);
             console.log("newprogress: ", newProgress);
-            // setProgress(() => newProgress);
             handleProgress(newProgress);
         }
     }, [correctWordArr]);
@@ -239,7 +236,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
 
             </div>
             <div className="mt-4">
-                <input className={`${userClassName} input`} disabled={gameFinish || timeRemaining === 0 || !gameStarted} type="text" name="userText" value={userInput} onChange={handleInput} onPaste={(e) => {
+                <input className={`${userClassName} input`} autoComplete="off" disabled={gameFinish || timeRemaining === 0 || !gameStarted} type="text" name="userText" value={userInput} onChange={handleInput} onPaste={(e) => {
                     e.preventDefault()
                     return false;
                 }} ref={inputReference} />

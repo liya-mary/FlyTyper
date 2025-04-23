@@ -1,4 +1,4 @@
-# Fly Typer
+# Fly Typer (Legacy Project)
 
  "Fly Typer is an interactive multiplayer game where you compete against real players in real-time, racing to see who can type the fastest and most accurately."
    
@@ -24,3 +24,6 @@
 - Backend-Express.js
 - Socket.io for multiplayer functionality
 
+
+
+By Eric & Guillermo

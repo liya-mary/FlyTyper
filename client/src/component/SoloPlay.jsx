@@ -1,7 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import Typer from './Typer'
-import React from 'react';
-import { useEffect, useState } from "react"
-
 
 function SoloPlay() {
     const [paragraphList, setParagraphList] = useState([]);
@@ -16,15 +14,15 @@ function SoloPlay() {
 
     const handleGameFinish = () => {
         setGameFinish(true);
-
     }
+
     const handleWpm = (currWpm) => {
         // console.log("wpm from parent: ", currWpm);
         setWpm(currWpm);
-
     }
+
     const handleProgress = (progress) => {
-        console.log("new progress: ", progress);
+        console.log("new progress:", progress);
         setProgress(progress);
     }
 
@@ -57,11 +55,7 @@ function SoloPlay() {
                 setGameStarted(true);
             }, delay)
         }
-
-
     }, [startTime])
-
-
 
     if (!paragraphList || paragraphList.length === 0) {
         return <div>Loading messages...</div>;
@@ -72,25 +66,20 @@ function SoloPlay() {
             <div className="hero-body">
                 <div className="container">
                     <div className="columns">
-
-                        < div className="column is-8 is-offset-2   mt-4">
+                        < div className="column is-8 is-offset-2 mt-4">
                             <h1 className="is-size-2 has-text-weight-semibold is-family-secondary">Solo Play</h1>
-                            <div className="columns is-mobile is-vcentered  mt-4">
-                                <h4 className="column is-one-quarter"> Progress:</h4>
+                            <div className="columns is-mobile is-vcentered mt-4">
+                                <h4 className="column is-one-quarter">Progress:</h4>
                                 <div className="column is-6 ">
-                                    <progress className=" progress is-success is-normal has-background-white" value={progress} max={100} />
-
+                                    <progress className=" progress is-success is-normal has-background-white" value={progress} max={100}/>
                                 </div>
                             </div>
-
-                            <Typer randomParagraph={randomParagraph} gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={wpm} handleWpm={handleWpm} progress={progress} handleProgress={handleProgress} startTime={startTime} gameStarted={gameStarted} />
-
+                            <Typer randomParagraph={randomParagraph} gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={wpm} handleWpm={handleWpm} progress={progress} handleProgress={handleProgress} startTime={startTime} gameStarted={gameStarted}/>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
     )
 }
 

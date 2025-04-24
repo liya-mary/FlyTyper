@@ -1,17 +1,13 @@
-import React from 'react';
-import { useState } from 'react';
-
+import React, { useState } from 'react';
 
 function Navbar() {
     const [isActive, setIsActive] = useState(false);
 
     return (
-
         <div>
             <nav className="navbar has-background-link-65 columns is-3 " role="navigation" aria-label="main navigation">
-                <div className="navbar-brand ">
-
-                    <a className="navbar-item has-text-light is-size-3 has-text-weight-bold  custom-hover m-4" href="/">
+                <div className="navbar-brand">
+                    <a className="navbar-item has-text-light is-size-3 has-text-weight-bold custom-hover m-4" href="/">
                         Fly Typer
                     </a>
                     <a role="button" className={`navbar-burger ${isActive ? "is-active" : ""}`} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -22,12 +18,11 @@ function Navbar() {
                     </a>
                 </div>
                 <div id="navbarBasicExample" className={`navbar-menu ${isActive ? "is-active" : ""}`}>
-                    <div className="navbar-start ">
-                        <a className="navbar-item has-text-light is-size-5 custom-hover ml-6 " href="/">
+                    <div className="navbar-start">
+                        <a className="navbar-item has-text-light is-size-5 custom-hover ml-6" href="/">
                             Home
                         </a>
-
-                        <a className="navbar-item has-text-light is-size-5 custom-hover ml-6 ">
+                        <a className="navbar-item has-text-light is-size-5 custom-hover ml-6">
                             About
                         </a>
                     </div>
@@ -38,10 +33,7 @@ function Navbar() {
                     </div>
                 </div>
             </nav>
-
         </div>
-
-
     )
 }
 

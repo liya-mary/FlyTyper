@@ -6,7 +6,7 @@ const http = require('http');
 const { Server } = require("socket.io");
 const db = require('./database');
 const fs = require('fs');
-const user = require('./model/user');
+// const user = require('./model/user'); FUTURE FEATURE
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +16,6 @@ app.use(express.json());
 
 const server = http.createServer(app);
 
-
 const io = new Server(server, {
     cors: {
         origin: "http://localhost:5173",
@@ -24,9 +23,7 @@ const io = new Server(server, {
     },
 });
 
-
 const roomData = {};
-
 
 io.on('connection', socket => {
     //On join room
@@ -61,7 +58,6 @@ io.on('connection', socket => {
                 roomParagraph: randomPara,
                 users: {
                     // abc: { time: 0 }
-
                 }
             }
         }
@@ -76,12 +72,9 @@ io.on('connection', socket => {
         roomData[room].users[id].userWpm = 0;
         roomData[room].users[id].userProgress = 0;
 
-
         console.log("user updated: ", roomData[room]);
 
-
         io.to(room).emit('roomData', roomData[room]);
-
 
         //game Finish
         // .=>string []-variable
@@ -110,36 +103,22 @@ io.on('connection', socket => {
         })
 
 
-
         socket.on("trackWpm", (currWpm) => {
             roomData[room].users[socket.id].userWpm = currWpm;
             // console.log("curr wpm in server: ", roomData[room].users[socket.id].userWpm);
             io.to(room).emit('roomData', roomData[room]);
-
         })
 
         socket.on("trackProgress", (currProgress) => {
             roomData[room].users[socket.id].userProgress = currProgress;
             // console.log("currprogress in server: ", roomData[room].users[socket.id].userProgress);
             io.to(room).emit('roomData', roomData[room]);
-
         })
-
     });
+    
     socket.on('leave', function () {
         console.log("leave");
-        // try {
-        //     console.log('[socket]', 'leave room :', room);
-        //     socket.leave(room);
-        //     socket.to(room).emit('user left', socket.id);
-        // } catch (e) {
-        //     console.log('[error]', 'leave room :', e);
-        //     socket.emit('error', 'couldnt perform requested action');
-        // }
     })
-
-
-
 });
 
 

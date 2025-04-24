@@ -4,7 +4,7 @@ const sequelize = new Sequelize({
     dialect: 'postgres',
     database: 'flytyper_db',
     username: 'postgres',
-    password: 'password',
+    password: '',
     host: 'localhost',
     port: 5432,
     ssl: true,

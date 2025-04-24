@@ -1,8 +1,5 @@
-import { useEffect, useState, useRef } from "react"
-import React from 'react';
+import React, { useEffect, useState, useRef } from "react"
 import PropTypes from 'prop-types';
-// import { useNavigate } from 'react-router-dom';
-
 
 function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, progress, handleProgress, startTime, gameStarted }) {
 
@@ -16,8 +13,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
     const [now, setNow] = useState(Date.now());
     const [timeTaken, setTimeTaken] = useState(0);
 
-
-    Typer.propTypes = { 
+    Typer.propTypes = {
         randomParagraph: PropTypes.string.isRequired,
         gameFinish: PropTypes.bool.isRequired,
         handleGameFinish: PropTypes.func.isRequired,
@@ -27,9 +23,8 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
         handleProgress: PropTypes.func.isRequired,
         startTime: PropTypes.number.isRequired,
         gameStarted: PropTypes.bool.isRequired,
-
-
     };
+
     const initialTime = 3 * 60;
     const inputReference = useRef(null);
     const [timeRemaining, setTimeRemaining] = useState(initialTime);
@@ -37,8 +32,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
     const buttonHandler = () => {
         console.log("button clicked");
         window.location.reload(true);
-        // navigate('/soloplay');
-
     }
 
     function handleCharacterError(value) {
@@ -46,7 +39,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
         for (let i = 0; i < value.length; i++) {
             if (value[i] !== currWord[i]) {
                 setCharacterErrorCount((characterErrorCount) => characterErrorCount + 1);
-                console.log("char error.....");
+                console.log("char error...");
                 setUserClassName("has-background-danger");
                 return;
             }
@@ -56,15 +49,14 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
 
     function handleInput(event) {
         let value = event.target.value;
-        console.log("typeof :", typeof (value))
+        console.log("typeof:", typeof (value))
         console.log("value: ", value);
 
         setUserInput(value);
 
-
         if (value.includes(" ")) {
             let userWord = userInput.trim();
-            console.log('userInput : ', userWord);
+            console.log('userInput: ', userWord);
             if (userWord === wordsArr[wordsArrIndex]) {
                 console.log(userWord + ": is equal to :" + wordsArr[wordsArrIndex]);
                 setcorrectWordArr([...correctWordArr, userWord]);
@@ -72,19 +64,18 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 value = '';
                 setUserInput(value);
             } else {
-                console.log(userWord + ": is not  equal to :" + wordsArr[wordsArrIndex]);
+                console.log(userWord + ": is not equal to :" + wordsArr[wordsArrIndex]);
             }
-
         }
 
         handleCharacterError(value);
 
         if (wordsArrIndex === wordsArr.length - 1) {
-            console.log("userInput : ", value);
-            console.log("wordsArr[wordsArrIndex] : ", wordsArr[wordsArrIndex]);
+            console.log("userInput: ", value);
+            console.log("wordsArr[wordsArrIndex]: ", wordsArr[wordsArrIndex]);
             if (value === wordsArr[wordsArrIndex]) {
                 console.log(value + ": is equal to :" + wordsArr[wordsArrIndex]);
-                console.log("you win");
+                console.log("You win");
                 setcorrectWordArr([...correctWordArr, value]);
                 setUserInput("");
                 handleGameFinish();
@@ -118,7 +109,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
 
     }, [gameFinish, gameStarted]);
 
-    useEffect(() => { //AI
+    useEffect(() => {
         if (!gameStarted) {
             const interval = setInterval(() => {
                 setNow(Date.now());
@@ -128,7 +119,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
             inputReference.current?.focus();
         }
     }, [gameStarted]);
-
 
 
     useEffect(() => {
@@ -146,7 +136,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
         let timeTaken = ((Date.now() - startTime) / 1000) / 60;
         // console.log("time taken: ", timeTaken);
         let currwpm = Math.round((wordcount / timeTaken));
-        console.log("currwpm: ", currwpm + " wpm");
+        console.log("currwpm:", currwpm + " wpm");
         if (gameStarted) {
             setTimeTaken(timeTaken);
         }
@@ -172,7 +162,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
     useEffect(() => {
         if (correctWordArr.length > 0) {
             let newProgress = Math.round((correctWordArr.length / wordsArr.length) * 100);
-            console.log("newprogress: ", newProgress);
+            console.log("newprogress:", newProgress);
             handleProgress(newProgress);
         }
     }, [correctWordArr]);
@@ -180,9 +170,9 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
 
     return (
         <div className="hero-body" >
-            <div className="columns column is-8  has-text-centered  ">
+            <div className="columns column is-8 has-text-centered  ">
                 {!gameStarted && startTime && (
-                    <h2 className="has-text-weight-semibold is-size-4 has-text-success " >Game starts in :{Math.max(0, Math.floor((startTime - now) / 1000))}s</h2>
+                    <h2 className="has-text-weight-semibold is-size-4 has-text-success" >Game starts in :{Math.max(0, Math.floor((startTime - now) / 1000))}s</h2>
                 )}
             </div>
 
@@ -199,18 +189,18 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 {
                     timeRemaining == 0 &&
                     <div>
-                        <h1 className="has-text-weight-semibold is-size-4 has-text-danger ">oopsie.. Timeout </h1>
+                        <h1 className="has-text-weight-semibold is-size-4 has-text-danger ">Oopsie... Timeout </h1>
                         <button className="button is-yellow has-background-link has-text-light is-medium mb-4 " onClick={buttonHandler}>Play Again</button>
                     </div>
                 }
             </div>
 
-            <div className="message  is-size-4 ">
+            <div className="message is-size-4 ">
                 <div className="message-header has-background-link has-text-light">
                     <p>Snippet</p>
                     <p>{new Date(timeRemaining * 1000).toISOString().substring(14, 19)}</p>
                 </div>
-                <div className="message-body has-background-white ">
+                <div className="message-body has-background-white">
                     <h3 className="is-size-5" >
                         <strong>
                             {
@@ -242,23 +232,20 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                 }} ref={inputReference} />
             </div>
 
-            <div className="columns  is-mobile mt-4 message ">
-                <div className="column is-two-quarters has-text-centered ">
-                    <h4 className="message-header has-background-link has-text-white is-centered has-text-weight-semibold ">wpm</h4>
-                    <h4 className="message-body has-background-white  ">{wpm} </h4>
+            <div className="columns  is-mobile mt-4 message">
+                <div className="column is-two-quarters has-text-centered">
+                    <h4 className="message-header has-background-link has-text-white is-centered has-text-weight-semibold">wpm</h4>
+                    <h4 className="message-body has-background-white">{wpm} </h4>
                 </div>
-                <div className="column is-two-quarters has-text-centered  ">
-                    <h4 className="message-header has-background-link has-text-white  has-text-centered  ">Accuracy </h4>
-                    <h4 className="message-body has-background-white ">{accuracy}%</h4>
+                <div className="column is-two-quarters has-text-centered">
+                    <h4 className="message-header has-background-link has-text-white has-text-centered">Accuracy </h4>
+                    <h4 className="message-body has-background-white">{accuracy}%</h4>
                 </div>
                 <div className="column ">
-                    <h4 className=" message-header has-background-link has-text-white has-text-centered ">Time</h4>
-                    <h4 className="message-body has-background-white ">{new Date(timeTaken * 60 * 1000).toISOString().substring(14, 19)}</h4>
+                    <h4 className=" message-header has-background-link has-text-white has-text-centered">Time</h4>
+                    <h4 className="message-body has-background-white">{new Date(timeTaken * 60 * 1000).toISOString().substring(14, 19)}</h4>
                 </div>
             </div>
-
-
-
         </div>
     )
 }

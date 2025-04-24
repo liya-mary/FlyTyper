@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Typer from './Typer';
 import io from 'socket.io-client';
 
 const socket = io.connect('http://localhost:3000');
 
 export default function QuickPlay() {
+
     const [gameFinish, setGameFinish] = useState(false);
-    const [startTime, setStartTime] = useState(null);
+    const [startTime, setStartTime] = useState<number>(0);
     const [gameStarted, setGameStarted] = useState(false);
-    const [roomData, setRoomData] = useState({});
+    const [roomData, setRoomData] = useState({
+      startTime: 0,
+      gameStarted: false,
+      roomParagraph: "",
+      users: ""
+    });
     const [users, setUsers] = useState({});
 
 
@@ -16,11 +22,11 @@ export default function QuickPlay() {
         setGameFinish(true);
     }
 
-    const handleProgress = (progress) => {
+    const handleProgress = (progress: number) => {
         socket.emit("trackProgress", progress);
     }
 
-    const handleWpm = (currWpm) => {
+    const handleWpm = (currWpm: number) => {
         socket.emit("trackWpm", currWpm);
     }
 
@@ -34,6 +40,7 @@ export default function QuickPlay() {
         if (gameFinish) {
             const timeTaken = Date.now() - startTime;
             socket.emit('gameFinish', socket.id, timeTaken);
+            console.log('startTime', startTime)
         }
     }, [gameFinish])
 

@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-
 function Navbar() {
-    const [isActive, setIsActive] = useState(false);
 
     return (
         <div>
@@ -10,14 +7,14 @@ function Navbar() {
                     <a className="navbar-item has-text-light is-size-3 has-text-weight-bold custom-hover m-4" href="/">
                         Fly Typer
                     </a>
-                    <a role="button" className={`navbar-burger ${isActive ? "is-active" : ""}`} aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <a role="button" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                     </a>
                 </div>
-                <div id="navbarBasicExample" className={`navbar-menu ${isActive ? "is-active" : ""}`}>
+                <div id="navbarBasicExample">
                     <div className="navbar-start">
                         <a className="navbar-item has-text-light is-size-5 custom-hover ml-6" href="/">
                             Home

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import PropTypes from 'prop-types';
 
-function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, progress, handleProgress, startTime, gameStarted }) {
+function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, handleProgress, startTime, gameStarted }) {
 
     const [userClassName, setUserClassName] = useState("user-input");
     const [wordsArr, setWordsArr] = useState([]);

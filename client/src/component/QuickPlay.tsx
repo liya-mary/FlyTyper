@@ -4,18 +4,33 @@ import io from 'socket.io-client';
 
 const socket = io.connect('http://localhost:3000');
 
+interface UserData {
+  userWpm: number;
+  userProgress: number;
+  rank?: number;
+}
+
+type Users = Record<string, UserData>;
+
+interface RoomData {
+  startTime: number;
+  gameStarted: boolean;
+  roomParagraph: string;
+  users: Users;
+}
+
 export default function QuickPlay() {
 
-    const [gameFinish, setGameFinish] = useState(false);
-    const [startTime, setStartTime] = useState<number>(0);
-    const [gameStarted, setGameStarted] = useState(false);
-    const [roomData, setRoomData] = useState({
+    const [gameFinish, setGameFinish] = useState<boolean>(false);
+    const [gameStarted, setGameStarted] = useState<boolean>(false);
+    const [roomData, setRoomData] = useState<RoomData>({
       startTime: 0,
       gameStarted: false,
       roomParagraph: "",
-      users: ""
+      users: {},
     });
-    const [users, setUsers] = useState({});
+    const [users, setUsers] = useState<Users>({});
+    const startTime: number = 0;
 
 
     const handleGameFinish = () => {
@@ -45,7 +60,7 @@ export default function QuickPlay() {
     }, [gameFinish])
 
     useEffect(() => {
-        socket.on("roomData", (data) => {
+        socket.on("roomData", (data: RoomData) => {
             console.log("roomData", data);
             setRoomData(data);
             console.log("users:", data.users);
@@ -64,12 +79,6 @@ export default function QuickPlay() {
             }, delay)
         }
     }, [roomData.startTime])
-
-    useEffect(() => {
-        socket.on("user left", (data) => {
-            console.log("socket left", data);
-        })
-    }, [])
 
     return (
         <>
@@ -112,7 +121,7 @@ export default function QuickPlay() {
                             }
                           <div>
                               <Typer randomParagraph={roomData.roomParagraph}
-                                  gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={roomData.users?.[socket.id]?.userWpm} handleWpm={handleWpm} progress={0} handleProgress={handleProgress} startTime={roomData.startTime} gameStarted={gameStarted}/>
+                                  gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={roomData.users?.[socket.id]?.userWpm} handleWpm={handleWpm} handleProgress={handleProgress} startTime={roomData.startTime} gameStarted={gameStarted}/>
                           </div>
                       </div>
                   </div>

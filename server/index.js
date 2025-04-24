@@ -72,6 +72,7 @@ io.on('connection', socket => {
         console.log(id + ' joined room: ' + room);
 
         roomData[room].users[id] = {};
+        //initialise the values
         roomData[room].users[id].userWpm = 0;
         roomData[room].users[id].userProgress = 0;
 

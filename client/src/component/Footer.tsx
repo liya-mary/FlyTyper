@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Footer() {
     return (
         <footer className="hero-footer has-background-white-ter ">

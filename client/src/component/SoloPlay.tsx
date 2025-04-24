@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Typer from './Typer'
 
 function SoloPlay() {
@@ -8,7 +8,7 @@ function SoloPlay() {
     const [wpm, setWpm] = useState(0);
     const [progress, setProgress] = useState(0);
     const [gameStarted, setGameStarted] = useState(false);
-    const [startTime, setStartTime] = useState(null);
+    const [startTime, setStartTime] = useState<number>(0);
 
 
 
@@ -16,12 +16,12 @@ function SoloPlay() {
         setGameFinish(true);
     }
 
-    const handleWpm = (currWpm) => {
+    const handleWpm = (currWpm: number) => {
         // console.log("wpm from parent: ", currWpm);
         setWpm(currWpm);
     }
 
-    const handleProgress = (progress) => {
+    const handleProgress = (progress: number) => {
         console.log("new progress:", progress);
         setProgress(progress);
     }
@@ -74,7 +74,7 @@ function SoloPlay() {
                                     <progress className=" progress is-success is-normal has-background-white" value={progress} max={100}/>
                                 </div>
                             </div>
-                            <Typer randomParagraph={randomParagraph} gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={wpm} handleWpm={handleWpm} progress={progress} handleProgress={handleProgress} startTime={startTime} gameStarted={gameStarted}/>
+                            <Typer randomParagraph={randomParagraph} gameFinish={gameFinish} handleGameFinish={handleGameFinish} wpm={wpm} handleWpm={handleWpm} handleProgress={handleProgress} startTime={startTime} gameStarted={gameStarted}/>
                         </div>
                     </div>
                 </div>

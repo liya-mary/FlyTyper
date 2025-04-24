@@ -1,10 +1,11 @@
+import { Socket } from "socket.io";
 require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
 const { Server } = require("socket.io");
-const db = require('./database');
+const db = require('../database');
 const fs = require('fs');
 // const user = require('./model/user'); FUTURE FEATURE
 
@@ -23,9 +24,27 @@ const io = new Server(server, {
     },
 });
 
-const roomData = {};
 
-io.on('connection', socket => {
+interface UserData {
+    userWpm?: number;
+    userProgress?: number;
+    rank?: number;
+  }
+
+type Users = Record<string, UserData>;
+
+interface RoomData {
+    startTime: number;
+    gameStarted: boolean;
+    roomParagraph: string;
+    users: Users;
+}
+
+type Room = Record<string, RoomData>;
+
+const roomData: Room = {};
+
+io.on('connection', (socket: Socket) => {
     //On join room
     console.log("User connected ", socket.id);
 

@@ -1,1 +1,3 @@
 client/src/component/FlyTyper_DailyLog
+client/node_modules
+server/node_modules

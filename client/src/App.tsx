@@ -1,5 +1,4 @@
 import './App.css'
-import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Dashboard from './component/Dashboard.tsx'
 import Navbar from "./component/Navbar.tsx"

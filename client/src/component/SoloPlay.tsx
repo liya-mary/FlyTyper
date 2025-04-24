@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Typer from './Typer'
+import Typer from './Typer.tsx'
 
 function SoloPlay() {
     const [paragraphList, setParagraphList] = useState([]);

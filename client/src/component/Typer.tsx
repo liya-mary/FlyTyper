@@ -1,40 +1,39 @@
-import React, { useEffect, useState, useRef } from "react"
-import PropTypes from 'prop-types';
+import { useEffect, useState, useRef } from "react"
 
-function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, handleProgress, startTime, gameStarted }) {
+interface TyperProps {
+  randomParagraph: string,
+  gameFinish: boolean,
+  handleGameFinish: () => void,
+  wpm: number,
+  handleWpm: (currWpm: number) => void,
+  handleProgress: (progress: number) => void,
+  startTime: number,
+  gameStarted: boolean
+}
 
-    const [userClassName, setUserClassName] = useState("user-input");
-    const [wordsArr, setWordsArr] = useState([]);
-    const [wordsArrIndex, setWordsArrIndex] = useState(0);
-    const [correctWordArr, setcorrectWordArr] = useState([]);
-    const [userInput, setUserInput] = useState("");
-    const [accuracy, setAccuracy] = useState(100);
-    const [characterErrorCount, setCharacterErrorCount] = useState(0);
-    const [now, setNow] = useState(Date.now());
-    const [timeTaken, setTimeTaken] = useState(0);
+function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, handleProgress, startTime, gameStarted }: TyperProps) {
 
-    Typer.propTypes = {
-        randomParagraph: PropTypes.string.isRequired,
-        gameFinish: PropTypes.bool.isRequired,
-        handleGameFinish: PropTypes.func.isRequired,
-        wpm: PropTypes.number.isRequired,
-        handleWpm: PropTypes.func.isRequired,
-        progress: PropTypes.number.isRequired,
-        handleProgress: PropTypes.func.isRequired,
-        startTime: PropTypes.number.isRequired,
-        gameStarted: PropTypes.bool.isRequired,
-    };
+    const [userClassName, setUserClassName] = useState<string>("user-input");
+    const [wordsArr, setWordsArr] = useState<string[]>([]);
+    const [wordsArrIndex, setWordsArrIndex] = useState<number>(0);
+    const [correctWordArr, setcorrectWordArr] = useState<string[]>([]);
+    const [userInput, setUserInput] = useState<string>("");
+    const [accuracy, setAccuracy] = useState<number>(100);
+    const [characterErrorCount, setCharacterErrorCount] = useState<number>(0);
+    const [now, setNow] = useState<number>(Date.now());
+    const [timeTaken, setTimeTaken] = useState<number>(0);
 
     const initialTime = 3 * 60;
-    const inputReference = useRef(null);
+    const inputReference = useRef<HTMLInputElement>(null);
+
     const [timeRemaining, setTimeRemaining] = useState(initialTime);
 
     const buttonHandler = () => {
         console.log("button clicked");
-        window.location.reload(true);
+        window.location.reload();
     }
 
-    function handleCharacterError(value) {
+    function handleCharacterError(value: string) {
         let currWord = wordsArr[wordsArrIndex];
         for (let i = 0; i < value.length; i++) {
             if (value[i] !== currWord[i]) {
@@ -47,7 +46,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
         setUserClassName("has-background-white");
     }
 
-    function handleInput(event) {
+    function handleInput(event: React.ChangeEvent<HTMLInputElement>) {
         let value = event.target.value;
         console.log("typeof:", typeof (value))
         console.log("value: ", value);
@@ -172,7 +171,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
         <div className="hero-body" >
             <div className="columns column is-8 has-text-centered  ">
                 {!gameStarted && startTime && (
-                    <h2 className="has-text-weight-semibold is-size-4 has-text-success" >Game starts in :{Math.max(0, Math.floor((startTime - now) / 1000))}s</h2>
+                    <h2 className="has-text-weight-semibold is-size-4 has-text-success" >Game starts in: {Math.max(0, Math.floor((startTime - now) / 1000))}s</h2>
                 )}
             </div>
 
@@ -204,7 +203,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                     <h3 className="is-size-5" >
                         <strong>
                             {
-                                randomParagraph?.split('').map((char, index) => {
+                                randomParagraph?.split('').map((char, index: number) => {
                                     const userChar = correctWordArr.length == 0 ? userInput[index] : (correctWordArr.join(' ') + " " + userInput)[index];
                                     let className = '';
 

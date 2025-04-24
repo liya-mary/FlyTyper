@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './Home';
-import SoloPlay from './SoloPlay';
+import Home from './Home.tsx';
+import SoloPlay from './SoloPlay.tsx';
 import QuickPlay from './QuickPlay.tsx';
 
 

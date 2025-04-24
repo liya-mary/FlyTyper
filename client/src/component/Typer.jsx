@@ -17,7 +17,7 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
     const [timeTaken, setTimeTaken] = useState(0);
 
 
-    Typer.propTypes = { //AI code
+    Typer.propTypes = { 
         randomParagraph: PropTypes.string.isRequired,
         gameFinish: PropTypes.bool.isRequired,
         handleGameFinish: PropTypes.func.isRequired,

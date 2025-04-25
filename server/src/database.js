@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize({
     dialect: 'postgres',
@@ -8,7 +8,7 @@ const sequelize = new Sequelize({
     host: 'localhost',
     port: 5432,
     ssl: true,
-    clientMinMessages: 'notice',
+    clientMinMessages: 'notice', //Ask Liya
     logging: false
 });
 
@@ -22,9 +22,7 @@ const sequelize = new Sequelize({
 })();
 
 const db = {};
-db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.User = require('./model.js')(sequelize, DataTypes);
 
 module.exports = db;
 

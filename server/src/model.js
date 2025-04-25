@@ -1,9 +1,9 @@
-interface Sequelize {
-  id: number,
-  username: string,
-  wpm: number
-  tableName: 
-}
+// interface Sequelize {
+//   id: number,
+//   username: string,
+//   wpm: number
+//   tableName:
+// }
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {

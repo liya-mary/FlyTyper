@@ -5,7 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const http = require('http');
 const { Server } = require("socket.io");
-const db = require('../database');
+const db = require('./database');
 const fs = require('fs');
 // const user = require('./model/user'); FUTURE FEATURE
 
@@ -29,6 +29,7 @@ interface UserData {
     userWpm?: number;
     userProgress?: number;
     rank?: number;
+    timeTaken?: number
   }
 
 type Users = Record<string, UserData>;
@@ -66,7 +67,7 @@ io.on('connection', (socket: Socket) => {
                 console.log("starting the game");
                 roomData[room].gameStarted = true;
             }, countDown * 1000);
-            const paragraphList = JSON.parse(fs.readFileSync('./message.json', 'utf-8'));
+            const paragraphList = JSON.parse(fs.readFileSync('../message.json', 'utf-8'));
             const randomIndex = Math.floor(Math.random() * paragraphList.length);
             const randomPara = paragraphList[randomIndex].text;
             console.log("random para server: ", randomPara);
@@ -98,19 +99,27 @@ io.on('connection', (socket: Socket) => {
         //game Finish
         // .=>string []-variable
         socket.on("gameFinish", (userId, timeTaken) => {
+
+            if (!room || !roomData[room] || !roomData[room].users) {
+              console.log('Error: Room or user data missing')
+              return;
+            }
+
             const currUser = roomData[room].users[userId];
             console.log("curr user id : ", currUser);
-            currUser["timeTaken"] = timeTaken;
-            console.log("time taken by id: ", currUser["timeTaken"]);
+
+            currUser.timeTaken = timeTaken;
+            console.log("time taken by id: ", currUser.timeTaken);
+
             const users = roomData[room].users;
             console.log("users:", users);
 
             Object.keys(users).filter((key) => {
-                return users[key].timeTaken;
+                return users[key].timeTaken
 
             }).sort((a, b) => {
                 console.log("a sort: ", a, "b sort: ", b);
-                return users[a].timeTaken - users[b].timeTaken;
+                return users[a].timeTaken ?? 0 - (users[b].timeTaken ?? 0);
             }).map((userId, index) => {
                 console.log("user from map: ", userId);
 
@@ -134,7 +143,7 @@ io.on('connection', (socket: Socket) => {
             io.to(room).emit('roomData', roomData[room]);
         })
     });
-    
+
     socket.on('leave', function () {
         console.log("leave");
     })

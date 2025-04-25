@@ -9,6 +9,6 @@
       "forceConsistentCasingInFileNames": true,
       "allowJs": true
     },
-    "include": ["./src/*.ts", "src/model.js"],
+    "include": ["./src/*.ts"],
     "exclude": ["node_modules"]
   }

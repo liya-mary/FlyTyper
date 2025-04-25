@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize({
     dialect: 'postgres',
@@ -21,8 +21,13 @@ const sequelize = new Sequelize({
     }
 })();
 
-const db = {};
-db.sequelize = sequelize;
+interface Db {
+  sequelize: Sequelize
+}
+
+const db: Db = {
+  sequelize: sequelize
+};
 
 module.exports = db;
 

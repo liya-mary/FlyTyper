@@ -4,8 +4,6 @@ import Typer from './Typer';
 
 const socket = io.connect('http://localhost:3000');
 
-
-
 export default function QuickPlay() {
     const [gameFinish, setGameFinish] = useState(false);
     const [startTime, setStartTime] = useState(null);
@@ -69,20 +67,6 @@ export default function QuickPlay() {
         })
 
     }, [])
-    // useEffect(() => {
-    //     const users = Object.keys(roomData.users);
-    //     const allRanked = users.every((userId) => {
-    //         const rank = roomData[userId]?.Rank;
-    //         return rank !== undefined && rank !== "undefined" && rank !== null;
-    //     });
-
-    //     if (allRanked) {
-    //         socket.emit("leave");
-    //     }
-
-
-    // }, [roomData])
-
 
     return (
         <>
@@ -139,10 +123,6 @@ export default function QuickPlay() {
                     </div>
                 </div>
             </section >
-
-
-
         </>
-
     );
 }

@@ -136,9 +136,6 @@ io.on('connection', socket => {
         //     socket.emit('error', 'couldnt perform requested action');
         // }
     })
-
-
-
 });
 
 

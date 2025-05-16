@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 function Navbar() {
     const [isActive, setIsActive] = useState(false);
-
     return (
 
         <div>
@@ -40,8 +39,6 @@ function Navbar() {
             </nav>
 
         </div>
-
-
     )
 }
 

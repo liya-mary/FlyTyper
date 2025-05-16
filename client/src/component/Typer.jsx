@@ -1,8 +1,6 @@
 import { useEffect, useState, useRef } from "react"
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { useNavigate } from 'react-router-dom';
-
 
 function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, progress, handleProgress, startTime, gameStarted }) {
 
@@ -256,9 +254,6 @@ function Typer({ randomParagraph, gameFinish, handleGameFinish, wpm, handleWpm, 
                     <h4 className="message-body has-background-white ">{new Date(timeTaken * 60 * 1000).toISOString().substring(14, 19)}</h4>
                 </div>
             </div>
-
-
-
         </div>
     )
 }

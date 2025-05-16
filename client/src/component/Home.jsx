@@ -15,9 +15,7 @@ function Home() {
         console.log("Quickplay clicked");
         navigate('/quickplay');
     }
-
     return (
-
         <section className="hero is-white height dashboard-container content-area  has-background-white-ter ">
             <div className="hero-body ">
                 <div className="container">
@@ -53,8 +51,6 @@ function Home() {
                 </div>
             </div>
         </section>
-
-
     )
 }
 

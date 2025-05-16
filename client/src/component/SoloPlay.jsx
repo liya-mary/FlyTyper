@@ -12,8 +12,6 @@ function SoloPlay() {
     const [gameStarted, setGameStarted] = useState(false);
     const [startTime, setStartTime] = useState(null);
 
-
-
     const handleGameFinish = () => {
         setGameFinish(true);
 
@@ -27,7 +25,6 @@ function SoloPlay() {
         console.log("new progress: ", progress);
         setProgress(progress);
     }
-
 
     useEffect(() => {
         fetch('/message.json').then((response) => {
@@ -57,11 +54,7 @@ function SoloPlay() {
                 setGameStarted(true);
             }, delay)
         }
-
-
     }, [startTime])
-
-
 
     if (!paragraphList || paragraphList.length === 0) {
         return <div>Loading messages...</div>;

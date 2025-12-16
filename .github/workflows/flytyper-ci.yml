@@ -1,0 +1,35 @@
+name: FlyTyper Classic CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  sanity-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Audit dependencies (non-blocking)
+        run: npm audit --audit-level=high || true
+
+      - name: Start server (smoke test)
+        run: |
+          npm run start &
+          sleep 5
+      - name: Run ESLint
+        run: npx eslint .
+

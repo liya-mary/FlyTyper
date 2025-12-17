@@ -6,7 +6,7 @@ const http = require('http');
 const { Server } = require("socket.io");
 const db = require('./database');
 const fs = require('fs');
-const user = require('./model/user');
+// const user = require('./model/user');
 
 const app = express();
 const PORT = process.env.PORT || 3000;

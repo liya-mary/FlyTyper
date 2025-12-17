@@ -32,4 +32,5 @@ jobs:
           sleep 5
 
       - name: Run ESLint
+        working-directory: server
         run: npx eslint .
